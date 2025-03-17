@@ -31,12 +31,12 @@ public class DependencyTest
     }
 
     [Fact]
-    public void Infrastructure_Should_Only_Reference_Domain()
+    public void Infrastructure_Should_Only_Reference_Domain_And_Application()
     {
         var references = GetProjectReference("../../../../../src/Infrastructure/Infrastructure.csproj");
 
-        Assert.DoesNotContain("Application.csproj", references);
         Assert.DoesNotContain("Presentation.csproj", references);
+        Assert.Contains("Application.csproj", references);
         Assert.Contains("Domain.csproj", references);
     }
 }
