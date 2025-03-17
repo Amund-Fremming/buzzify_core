@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "IExPPkeLips=",
+  "success": true,
+  "projectFilePath": "C:\\Code\\PersonalSandbox\\Buzzify\\src\\Presentation\\Presentation.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\amund.fremming\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.1\\microsoft.aspnetcore.openapi.9.0.1.nupkg.sha512",
+    "C:\\Users\\amund.fremming\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\9.0.3\\microsoft.extensions.dependencyinjection.abstractions.9.0.3.nupkg.sha512",
+    "C:\\Users\\amund.fremming\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}
