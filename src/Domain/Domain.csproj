@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Aggregates\" />
     <Folder Include="Contracts\" />
-    <Folder Include="Entities\" />
+    <Folder Include="Entities\Ask\" />
+    <Folder Include="Entities\Rollo\" />
   </ItemGroup>
 
   <ItemGroup>
