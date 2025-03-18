@@ -1,5 +1,5 @@
 ﻿namespace Domain.Ask.Contracts;
 
-internal interface IAskGameService
+public interface IAskGameService
 {
 }

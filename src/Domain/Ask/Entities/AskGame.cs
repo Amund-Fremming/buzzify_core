@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Domain.Ask.Entities;
 
-namespace Domain.Ask.Entities;
-internal class AskGame
+public class AskGame
 {
 }

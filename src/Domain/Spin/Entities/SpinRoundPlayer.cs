@@ -1,5 +1,5 @@
 ﻿namespace Domain.Spin.Entities;
 
-public class SpinGame
+public class SpinRoundPlayer
 {
 }
