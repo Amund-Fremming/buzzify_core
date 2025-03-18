@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain;
-class Yo
+namespace Domain.Ask.Entities;
+internal class ss
 {
 }
