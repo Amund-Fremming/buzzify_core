@@ -6,7 +6,7 @@ namespace Domain.Example.Contracts;
 
 public interface IAppDbContext
 {
-    DbSet<Result<ExampleEntity>> ExampleEntity { get; set; }
+    DbSet<Result<ExampleEntity>> ExampleEntities { get; set; }
 
     Task<Result<T>> SaveChangesAsync<T>();
 

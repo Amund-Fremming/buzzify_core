@@ -7,7 +7,7 @@ namespace Infrastructure.Persistence;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options), IAppDbContext
 {
-    public DbSet<Result<ExampleEntity>> ExampleEntity { get; set; }
+    public DbSet<Result<ExampleEntity>> ExampleEntities { get; set; }
 
     public async Task<Result<ExampleEntity>> CreateAsync(ExampleEntity entity)
     {
@@ -66,37 +66,35 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         }
     }
 
-    public async Task<Result> DeleteAsync(int id)
+    public async Task<Result> DeleteAsync<T>(T entity)
     {
         try
         {
-            var entity = await ExampleEntities.FindAsync(id);
-            if (entity == null)
+            if (entity is null)
             {
-                return Result.Failure("Entity not found");
+                return new Error("Cannot delete type of null");
             }
 
-            ExampleEntities.Remove(entity);
+            Remove(entity);
             await SaveChangesAsync();
-            return Result.Success();
+            return Result.Ok();
         }
         catch (Exception ex)
         {
-            return Result.Failure($"Error while deleting entity: {ex.Message}");
+            return new Error($"Error while deleting entity: {ex.Message}");
         }
     }
 
-    // Implementering av SaveChangesAsync
-    public async Task<Result> SaveChangesAsync(CancellationToken cancellationToken)
+    public async Task<Result> SaveChangesAsync()
     {
         try
         {
-            await base.SaveChangesAsync(cancellationToken);
-            return Result.Success();
+            await base.SaveChangesAsync();
+            return Result.Ok();
         }
         catch (Exception ex)
         {
-            return Result.Failure($"Error while saving changes: {ex.Message}");
+            return new Error($"Error while saving changes: {ex.Message}");
         }
     }
 }
