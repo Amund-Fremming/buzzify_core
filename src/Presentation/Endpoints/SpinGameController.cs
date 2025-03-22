@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Domain.Entities;
+using Microsoft.AspNetCore.Mvc;
+using Presentation.Abstractions;
 
-namespace Presentation.Controllers;
+namespace Presentation.Endpoints;
 
-[ApiController]
 [Route("api/v1/[controller]")]
-public class SpinGameController : ControllerBase
-{
-}
+public class SpinGameController : GameControllerBase<SpinGame>;

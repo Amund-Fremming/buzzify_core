@@ -1,7 +1,7 @@
 ﻿using Application.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Presentation.Controllers;
+namespace Presentation.Endpoints;
 
 [ApiController]
 [Route("api/v1/[controller]")]

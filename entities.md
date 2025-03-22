@@ -1,9 +1,10 @@
 
 GameBase
 - Id (PK, int)
-- UniversalId (string)
+- UniversalId (Guid)
 - CreatorId (int)
 - Name (string)
+- Description (string)
 - NumberOfIterations (int)  
 - CurrentIteration (int)
 - State (enum) ??

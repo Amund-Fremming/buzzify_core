@@ -1,5 +1,7 @@
-﻿namespace Domain.Entities;
+﻿using Domain.Abstractions;
 
-public class AskGame
+namespace Domain.Entities;
+
+public class AskGame : GameBase
 {
 }

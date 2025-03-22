@@ -1,5 +1,7 @@
-﻿namespace Domain.Entities;
+﻿using Domain.Abstractions;
 
-public class SpinGame
+namespace Domain.Entities;
+
+public class SpinGame : GameBase
 {
 }

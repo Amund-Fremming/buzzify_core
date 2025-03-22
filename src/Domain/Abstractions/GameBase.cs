@@ -1,5 +1,21 @@
-﻿namespace Domain.Abstractions;
+﻿using System.ComponentModel.DataAnnotations;
 
-public class GameBase
+namespace Domain.Abstractions;
+
+public abstract class GameBase
 {
+    [Key]
+    public int Id { get; set; }
+
+    public Guid UniversalId { get; set; }
+
+    public string? CreatorId { get; set; }
+    public string? Player { get; set; }
+
+    public string? Name { get; set; }
+
+    public string Description { get; set; } = string.Empty;
+
+    public int NumberOfIterations { get; set; }
+    public int CurrentIterations { get; set; }
 }
