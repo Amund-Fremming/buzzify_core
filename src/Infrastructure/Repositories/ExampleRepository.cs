@@ -1,9 +1,9 @@
-﻿using Domain.Example.Contracts;
-using Domain.Example.Entities;
+﻿using Domain.Contracts;
+using Domain.Entities;
 
 namespace Infrastructure.Repositories;
 
-public class ExampleRepository(IAppDbContext context) : IExampleRepository
+public class ExampleRepository : IExampleRepository
 {
-    public ExampleEntity Get() => context.Get<ExampleEntity>();
+    public ExampleEntity Get() => new();
 }

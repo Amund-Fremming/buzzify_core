@@ -2,7 +2,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
-    <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -10,6 +9,7 @@
   </ItemGroup>
 
   <PropertyGroup>
+	  <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>

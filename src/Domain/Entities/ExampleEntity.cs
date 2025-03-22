@@ -1,4 +1,4 @@
-﻿namespace Domain.Example.Entities;
+﻿namespace Domain.Entities;
 
 public class ExampleEntity
 {

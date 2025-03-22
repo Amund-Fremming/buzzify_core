@@ -1,4 +1,4 @@
-﻿namespace Domain.Ask.Contracts;
+﻿namespace Domain.Contracts;
 
 public interface IAskGameService
 {

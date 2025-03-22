@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Core.src.Shared.ResultPattern;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Core.src.Shared.ResultPattern;
+namespace Domain.Shared.ResultPattern;
 
-public static class ResultExtention
+public static class ResultExtensions
 {
     /// <summary>
     /// Resolves the result of a given <see cref="Result"/> by executing the appropriate action based on its success or failure state.
@@ -32,7 +33,7 @@ public static class ResultExtention
     /// <param name="success">A function that takes the <see cref="Result"/> as input and returns a successful <see cref="ActionResult"/> when the operation is successful.</param>
     /// <param name="error">A function that takes the <see cref="Result"/> as input and returns a failure <see cref="ActionResult"/> when the operation fails.</param>
     /// <returns>An <see cref="ActionResult"/> representing either a successful or failure response based on the outcome of the result.</returns>
-    public static ActionResult Resolve(this Result result, Func<Result, ActionResult> success, Func<Result, ActionResult> error)
+    public static IActionResult Resolve(this Result result, Func<Result, IActionResult> success, Func<Result, IActionResult> error)
         => result.IsError ? error(result) : success(result);
 
     /// <summary>
@@ -44,7 +45,7 @@ public static class ResultExtention
     /// <param name="success">A function that takes the <see cref="Result{T}"/> as input and returns a successful <see cref="ActionResult"/> when the operation is successful.</param>
     /// <param name="error">A function that takes the <see cref="Result{T}"/> as input and returns a failure <see cref="ActionResult"/> when the operation fails.</param>
     /// <returns>An <see cref="ActionResult"/> representing either a successful or failure response based on the outcome of the result.</returns>
-    public static ActionResult Resolve<T>(this Result<T> result, Func<Result<T>, ActionResult> success, Func<Result<T>, ActionResult> error)
+    public static IActionResult Resolve<T>(this Result<T> result, Func<Result<T>, IActionResult> success, Func<Result<T>, IActionResult> error)
         => result.IsError ? error(result) : success(result);
 
     /// <summary>

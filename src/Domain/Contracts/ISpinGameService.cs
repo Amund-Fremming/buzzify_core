@@ -1,4 +1,4 @@
-﻿namespace Domain.Spin.Contracts;
+﻿namespace Domain.Contracts;
 
 public interface ISpinGameService
 {
