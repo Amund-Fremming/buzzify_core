@@ -1,4 +1,4 @@
-﻿namespace Core.src.Shared.ResultPattern;
+﻿namespace Domain.Shared.ResultPattern;
 
 public sealed record Result<T>(T Data, Error Error) : IResult, IResult<T>
 {

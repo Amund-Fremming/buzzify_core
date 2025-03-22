@@ -1,5 +1,5 @@
 ﻿namespace Infrastructure.Abstractions;
 
-internal class GenericRepository
+public class GenericRepository
 {
 }

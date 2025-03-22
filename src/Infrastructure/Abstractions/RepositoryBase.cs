@@ -1,5 +1,5 @@
 ﻿namespace Infrastructure.Abstractions;
 
-internal class RepositoryBase
+public class RepositoryBase
 {
 }

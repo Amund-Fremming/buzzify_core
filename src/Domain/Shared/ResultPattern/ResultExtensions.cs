@@ -1,5 +1,4 @@
-﻿using Core.src.Shared.ResultPattern;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Domain.Shared.ResultPattern;
 

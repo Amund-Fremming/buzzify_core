@@ -1,5 +1,5 @@
 ﻿namespace Domain.Abstractions;
 
-internal interface IGame
+public interface IGame
 {
 }

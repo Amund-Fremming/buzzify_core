@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 
-namespace Presentation.Hubs;
+namespace Presentation.Sockets;
 
 public class SpinGameHub : Hub
 {

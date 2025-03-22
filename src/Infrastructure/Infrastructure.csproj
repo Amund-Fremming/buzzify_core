@@ -4,10 +4,6 @@
     <ProjectReference Include="..\Application\Application.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Contracts\" />
-  </ItemGroup>
-
   <PropertyGroup>
 	  <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <TargetFramework>net9.0</TargetFramework>
