@@ -7,10 +7,11 @@ namespace Infrastructure;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddInfrastructureLayer(this IServiceCollection services)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
         services.AddScoped<IAppDbContext, AppDbContext>();
-        services.AddScoped<IExampleRepository, ExampleRepository>();
+        services.AddScoped<IAskGameRepository, AskGameRepository>();
+        services.AddScoped<ISpinGameRepository, SpinGameRepository>();
 
         return services;
     }

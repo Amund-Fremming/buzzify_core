@@ -1,11 +1,10 @@
-﻿using Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Domain.Contracts;
 
 public interface IAppDbContext
 {
-    DbSet<ExampleEntity> ExampleEntities { get; set; }
+    DbSet<T> Entity<T>() where T : class;
 
     void ApplyChanges<T>(T entity) where T : class;
 

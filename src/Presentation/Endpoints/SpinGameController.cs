@@ -5,4 +5,4 @@ using Presentation.Abstractions;
 namespace Presentation.Endpoints;
 
 [Route("api/v1/[controller]")]
-public class SpinGameController : GameControllerBase<SpinGame>;
+public class SpinGameController : ReadControllerBase<SpinGame>;

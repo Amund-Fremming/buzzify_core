@@ -1,4 +1,5 @@
 using Application;
+using Infrastructure;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +12,9 @@ services.AddControllers();
 services.AddLogging();
 services.AddResponseCompression(o => o.EnableForHttps = true);
 
-services.AddApplicationLayer();
+services
+    .AddInfrastructure()
+    .AddApplication();
 
 services.AddDbContext<AppDbContext>(o =>
 {
