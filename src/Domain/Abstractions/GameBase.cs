@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Domain.Entities.Shared;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Abstractions;
 
@@ -8,14 +9,9 @@ public abstract class GameBase
     public int Id { get; set; }
 
     public Guid UniversalId { get; set; }
-
-    public string? CreatorId { get; set; }
-    //public Player? Player { get; set; }
-
+    public int CreatorId { get; set; }
+    public Player? Creator { get; set; }
     public string? Name { get; set; }
-
-    public string Description { get; set; } = string.Empty;
-
-    public int NumberOfIterations { get; set; }
-    public int CurrentIterations { get; set; }
+    public int IterationsCount { get; set; }
+    public int CurrentIteration { get; set; }
 }

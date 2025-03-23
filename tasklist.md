@@ -1,6 +1,5 @@
 # Tasklist
 
-- All Game impl needs State 
-- DDD On all objects
+- DDD methods on SpinGame
 - DateTime last active on Player to see if active or not?
-- Add object references under their Id reference
+- Try to combine all assemblies in presenation to get api ts generation

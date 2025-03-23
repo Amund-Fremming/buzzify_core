@@ -10,4 +10,11 @@ public class Question
     public int AskGameId { get; set; }
 
     public string Text { get; set; } = default!;
+
+    public static Question Create(string text, int askGameId)
+        => new()
+        {
+            Text = text,
+            AskGameId = askGameId
+        };
 }

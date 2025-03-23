@@ -19,7 +19,7 @@ public sealed record Result(Error Error) : IResult
 
     public string Message => Error == null ? "No error message present." : Error.Message;
 
-    public static Result Ok() => new(Error: null!);
+    public static Result Ok => new(Error: null!);
 
     public static implicit operator Result(Error error) => new(error);
 

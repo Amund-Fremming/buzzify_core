@@ -1,4 +1,5 @@
 using Application;
+using Domain.Shared.TypeScript;
 using Infrastructure;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -10,12 +11,18 @@ var services = builder.Services;
 services.AddOpenApi();
 services.AddEndpointsApiExplorer();
 services.AddControllers();
+services.AddSignalR();
 services.AddLogging();
 services.AddResponseCompression(o => o.EnableForHttps = true);
 
 services
     .AddInfrastructure()
     .AddApplication();
+
+services.AddTypeScriptSupport(o =>
+{
+    // Add fe folder path
+});
 
 services.AddDbContext<AppDbContext>(o =>
 {

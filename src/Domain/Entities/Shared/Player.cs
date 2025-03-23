@@ -9,5 +9,6 @@ public class Player
 
     public string? Hash { get; set; }
 
-    public static Player Create() => new() { Hash = Guid.NewGuid().ToString() };
+    public static Player Create => new() { Hash = Guid.NewGuid().ToString() };
+    public static Player Empty => new();
 }

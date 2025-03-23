@@ -65,7 +65,7 @@ public abstract class RepositoryBase<T>(IAppDbContext context) : IRepository<T> 
             await context.AddAsync(entity);
             await context.SaveChangesAsync();
 
-            return Result.Ok();
+            return Result.Ok;
         }
         catch (Exception ex)
         {
@@ -80,7 +80,7 @@ public abstract class RepositoryBase<T>(IAppDbContext context) : IRepository<T> 
             context.ApplyChanges(entity);
             await context.SaveChangesAsync();
 
-            return Result.Ok();
+            return Result.Ok;
         }
         catch (Exception ex)
         {
@@ -102,7 +102,7 @@ public abstract class RepositoryBase<T>(IAppDbContext context) : IRepository<T> 
             context.Delete(entity);
             await context.SaveChangesAsync();
 
-            return Result.Ok();
+            return Result.Ok;
         }
         catch (Exception ex)
         {
