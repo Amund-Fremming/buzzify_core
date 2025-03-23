@@ -2,12 +2,11 @@
 
 namespace Domain.Entities.Spin;
 
-public class RoundPlayer
+public class SpinPlayer
 {
     [Key]
     public int Id { get; set; }
 
+    public int SpinGameId { get; set; }
     public int PlayerId { get; set; }
-    public int RoundId { get; set; }
-    public bool Host { get; set; }
 }
