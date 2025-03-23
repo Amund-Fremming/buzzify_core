@@ -1,5 +1,5 @@
 ﻿using Domain.Contracts;
-using Domain.Entities;
+using Domain.Entities.Spin;
 using Infrastructure.Abstractions;
 
 namespace Infrastructure.Repositories;

@@ -3,11 +3,10 @@ using Domain.Contracts;
 using Domain.Shared.Pagination;
 using Domain.Shared.ResultPattern;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Abstractions;
 
-public class RepositoryBase<T>(IAppDbContext context) : IRepository<T> where T : class
+public abstract class RepositoryBase<T>(IAppDbContext context) : IRepository<T> where T : class
 {
     public async Task<Result<T>> GetById(int id)
     {
@@ -25,7 +24,6 @@ public class RepositoryBase<T>(IAppDbContext context) : IRepository<T> where T :
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "GetById");
             return new Error(ex.Message, ex);
         }
     }
@@ -42,7 +40,6 @@ public class RepositoryBase<T>(IAppDbContext context) : IRepository<T> where T :
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "GetPage");
             return new Error(ex.Message, ex);
         }
     }
@@ -57,7 +54,6 @@ public class RepositoryBase<T>(IAppDbContext context) : IRepository<T> where T :
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "GetAll");
             return new Error(ex.Message, ex);
         }
     }
@@ -73,8 +69,7 @@ public class RepositoryBase<T>(IAppDbContext context) : IRepository<T> where T :
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Create");
-            throw;
+            return new Error(ex.Message, ex);
         }
     }
 
@@ -89,7 +84,6 @@ public class RepositoryBase<T>(IAppDbContext context) : IRepository<T> where T :
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Update");
             return new Error(ex.Message, ex);
         }
     }
@@ -112,7 +106,6 @@ public class RepositoryBase<T>(IAppDbContext context) : IRepository<T> where T :
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Delete");
             return new Error(ex.Message, ex);
         }
     }

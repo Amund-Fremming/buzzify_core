@@ -10,7 +10,7 @@ public abstract class GameBase
     public Guid UniversalId { get; set; }
 
     public string? CreatorId { get; set; }
-    public string? Player { get; set; }
+    //public Player? Player { get; set; }
 
     public string? Name { get; set; }
 

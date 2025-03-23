@@ -1,4 +1,4 @@
-﻿using Domain.Entities;
+﻿using Domain.Entities.Ask;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Abstractions;
 
