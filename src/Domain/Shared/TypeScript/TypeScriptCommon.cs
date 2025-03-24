@@ -14,6 +14,7 @@ public static class TypeScriptCommon
                _ when IsGenericType(type, out var tsType) => tsType,
                _ when IsCustomObjectType(type) => type.Name,
                _ when type.IsEnum => type.Name,
+               _ when type == typeof(Guid) => "string",
                _ => throw new InvalidOperationException("The type was not matched in ToTypeScriptType.")
            };
 

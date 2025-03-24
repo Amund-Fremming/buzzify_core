@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Domain.Shared.TypeScript;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Entities.Shared;
 
-public class Player
+public class Player : ITypeScriptModel
 {
     [Key]
     public int Id { get; set; }

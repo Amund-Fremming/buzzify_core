@@ -2,24 +2,24 @@
 using Domain.Entities.Shared;
 using Domain.Shared.Enums;
 using Domain.Shared.ResultPattern;
+using Domain.Shared.TypeScript;
 
 namespace Domain.Entities.Ask;
 
-public class AskGame : GameBase
+public class AskGame : GameBase, ITypeScriptModel
 {
     public Category Category { get; set; }
     public AskGameState State { get; set; }
     public string? Description { get; set; }
     public IList<Question> Questions { get; set; } = [];
 
-    public Result AddQuestion(string questionText)
+    public Result AddQuestion(Question question)
     {
-        if (string.IsNullOrEmpty(questionText))
+        if (question is null)
         {
-            return new Error("Parameter question cannot be null or empry.");
+            return new Error("Question cannot be null.");
         }
 
-        var question = Question.Create(questionText, Id);
         Questions.Add(question);
         IterationsCount++;
         return Result.Ok;

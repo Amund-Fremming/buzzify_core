@@ -1,6 +1,8 @@
-﻿namespace Domain.Entities.Shared;
+﻿using Domain.Shared.TypeScript;
 
-public record CreateGameRequest
+namespace Domain.Entities.Shared;
+
+public record CreateGameRequest : ITypeScriptModel
 {
     public string Name { get; set; } = default!;
     public string Description { get; set; } = default!;

@@ -12,6 +12,8 @@ public class SpinGame : GameBase, ITypeScriptModel
     public SpinGameState State { get; set; }
     public string? HubGroupName { get; set; }
     public IList<SpinPlayer> Players { get; set; } = [];
+    public IList<Challenge> Challenges { get; set; } = [];
+    public IList<SpinVote> Votes { get; set; } = [];
 
     // May be bad for performance, could just do a db check
     // to see if any SpinGamePlayer instance has this playerId and gameId
@@ -31,21 +33,31 @@ public class SpinGame : GameBase, ITypeScriptModel
         return Result.Ok;
     }
 
-    // TODO: Change to add round or challenge? need to save in db also
-    public Result AddRound(Challenge challenge)
+    public Result AddChallenge(Challenge challenge)
     {
         if (challenge is null)
         {
             return new Error("Challenge cannot be null.");
         }
 
-        // TODO
+        Challenges.Add(challenge);
         IterationsCount++;
         return Result.Ok;
     }
 
-    // StartGame
+    public Result Upvote(SpinVote vote)
+    {
+        if (vote is null)
+        {
+            return new Error("Vote cannot be null.");
+        }
+
+        Votes.Add(vote);
+        return Result.Ok;
+    }
+
     // StartSpin
+    // StartGame
     // NextRound
 
     public static SpinGame Create(string name, Player? creator = null, Category? category = Category.Random)
