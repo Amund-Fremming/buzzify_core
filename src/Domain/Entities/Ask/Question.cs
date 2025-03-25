@@ -11,10 +11,13 @@ public class Question : ITypeScriptModel
     public int AskGameId { get; private set; }
     public string Text { get; private set; } = default!;
 
+    public bool Active { get; set; }
+
     public static Question Create(string text, int askGameId)
         => new()
         {
             Text = text,
-            AskGameId = askGameId
+            AskGameId = askGameId,
+            Active = true
         };
 }

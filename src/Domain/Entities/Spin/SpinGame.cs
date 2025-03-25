@@ -6,14 +6,22 @@ using Domain.Shared.TypeScript;
 
 namespace Domain.Entities.Spin;
 
-public class SpinGame : GameBase, ITypeScriptModel
+public sealed class SpinGame : GameBase, ITypeScriptModel
 {
     public Category Category { get; private set; }
     public SpinGameState State { get; private set; }
     public string? HubGroupName { get; private set; }
-    public IList<SpinPlayer> Players { get; private set; } = [];
-    public IList<Challenge> Challenges { get; private set; } = [];
-    public IList<SpinVote> Votes { get; private set; } = [];
+
+    private readonly IList<SpinPlayer> _players = [];
+    private readonly IList<Challenge> _challenges = [];
+    private readonly IList<SpinVote> _votes = [];
+
+    public IReadOnlyList<SpinPlayer> Players => _players.AsReadOnly();
+    public IReadOnlyList<Challenge> Challenges => _challenges.AsReadOnly();
+    public IReadOnlyList<SpinVote> Votes { get; private set; } = [];
+
+    private SpinGame()
+    { }
 
     public Result AddPlayer(SpinPlayer player)
     {
@@ -22,12 +30,12 @@ public class SpinGame : GameBase, ITypeScriptModel
             return new Error("Player cannot be null.");
         }
 
-        if (Players.Contains(player))
+        if (_players.Contains(player))
         {
             return new Error("Player has already joined the game.");
         }
 
-        Players.Add(player);
+        _players.Add(player);
         return Result.Ok;
     }
 
@@ -38,7 +46,7 @@ public class SpinGame : GameBase, ITypeScriptModel
             return new Error("Challenge cannot be null.");
         }
 
-        Challenges.Add(challenge);
+        _challenges.Add(challenge);
         IterationsCount++;
         return Result.Ok;
     }
@@ -50,7 +58,7 @@ public class SpinGame : GameBase, ITypeScriptModel
             return new Error("Vote cannot be null.");
         }
 
-        Votes.Add(vote);
+        _votes.Add(vote);
         return Result.Ok;
     }
 
@@ -64,11 +72,8 @@ public class SpinGame : GameBase, ITypeScriptModel
             Category = category ?? Category.Random,
             State = SpinGameState.Initialized,
             UniversalId = Guid.NewGuid(),
-            CreatorId = creator?.Id ?? -1,
+            CreatorId = creator?.Id ?? 0,
             Creator = creator ?? Player.Empty,
             Name = name,
-            IterationsCount = 0,
-            CurrentIteration = 0,
-            Players = []
         };
 }

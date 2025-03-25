@@ -2,7 +2,7 @@
 
 namespace Domain.Entities.Shared;
 
-public record CreateGameRequest : ITypeScriptModel
+public sealed record CreateGameRequest : ITypeScriptModel
 {
     public string Name { get; set; } = default!;
     public string Description { get; set; } = default!;

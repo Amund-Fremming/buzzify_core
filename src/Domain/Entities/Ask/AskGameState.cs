@@ -3,6 +3,5 @@
 public enum AskGameState
 {
     Initialized,
-    Started,
-    Finished,
+    Closed,
 }

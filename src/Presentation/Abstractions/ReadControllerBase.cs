@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Presentation.Abstractions;
 
 [ApiController]
-public abstract class ReadControllerBase<T> : ControllerBase where T : GameBase
+public abstract class ReadControllerBase<T> : ControllerBase where T : class
 {
     private readonly IRepository<T> _repository;
 

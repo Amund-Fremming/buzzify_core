@@ -2,9 +2,13 @@
 
 ## Backend
 
-- Get on aggregates should return `AsReadOnly`
+- AddPlayer
+	- Endre til hvis spiller finnes i spillet, sett til active
+	- Burde kanskje SpinGame opprette relasjonen og ikke av seg selv?
+- Endepunkt for å sjekke om spiller finnes
+- endepunkt for å gjøre spiller inactive med disconnect
+
 - DDD methods on SpinGame
-- DateTime last active on Player to see if active or not?
 - Try to combine all assemblies in presenation to get api ts generation
 - Performance test AddPlayer DDD vs service layer
 - Admin dashboard
@@ -16,6 +20,7 @@
 	- Global state
 	- Service provider
 	- Connection
+		- Must have a api call to remove the player from the game (set to inactive)
 	- Game specific
 - Analysis
 	- Firebase

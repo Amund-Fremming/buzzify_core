@@ -11,7 +11,7 @@ public abstract class GameBase
     public Guid UniversalId { get; set; }
     public int CreatorId { get; set; }
     public Player? Creator { get; set; }
-    public string? Name { get; set; }
+    public string Name { get; set; } = default!;
     public int IterationsCount { get; set; }
     public int CurrentIteration { get; set; }
 }

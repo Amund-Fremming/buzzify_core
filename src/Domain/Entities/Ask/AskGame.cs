@@ -6,33 +6,38 @@ using Domain.Shared.TypeScript;
 
 namespace Domain.Entities.Ask;
 
-public class AskGame : GameBase, ITypeScriptModel
+/// <summary>
+/// The game logic is entirely managed on the client side.
+/// </summary>
+public sealed class AskGame : GameBase, ITypeScriptModel
 {
     public Category Category { get; private set; }
     public AskGameState State { get; private set; }
     public string? Description { get; private set; }
-    private List<Question> Questions { get; set; } = [];
 
-    protected AskGame()
+    private readonly List<Question> _questions = [];
+    public IReadOnlyList<Question> Questions => _questions.AsReadOnly();
+
+    private AskGame()
     { }
 
-    public Result AddQuestion(Question question)
+    public Result<int> AddQuestion(Question question)
     {
         if (question is null)
         {
             return new Error("Question cannot be null.");
         }
 
-        Questions.Add(question);
+        _questions.Add(question);
         IterationsCount++;
-        return Result.Ok;
+        return _questions.Count;
     }
 
-    public Question NextQuestion() => throw new NotImplementedException();
-
-    public void StartGame() => throw new NotImplementedException();
-
-    public void NextRound() => throw new NotImplementedException();
+    public Result<AskGame> StartGame()
+    {
+        State = AskGameState.Closed;
+        return this;
+    }
 
     public static AskGame Create(string name, Player? creator = null, string? description = default!, Category? category = Category.Random)
         => new()
@@ -40,12 +45,11 @@ public class AskGame : GameBase, ITypeScriptModel
             Category = category ?? Category.Random,
             State = AskGameState.Initialized,
             UniversalId = Guid.NewGuid(),
-            CreatorId = creator?.Id ?? -1,
+            CreatorId = creator?.Id ?? 0,
             Creator = creator ?? Player.Empty,
             Name = name,
             IterationsCount = 0,
             CurrentIteration = 0,
             Description = description,
-            Questions = [],
         };
 }
