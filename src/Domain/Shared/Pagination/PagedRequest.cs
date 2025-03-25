@@ -1,6 +1,6 @@
 ﻿namespace Domain.Shared.Pagination;
 
-public sealed record PagedRequest<T>
+public sealed record PagedRequest
 {
     public int PageNumber { get; set; }
     public int PageSize { get; set; }

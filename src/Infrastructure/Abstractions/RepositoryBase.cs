@@ -28,7 +28,7 @@ public abstract class RepositoryBase<T>(IAppDbContext context) : IRepository<T> 
         }
     }
 
-    public async Task<Result<IEnumerable<T>>> GetPage(PagedRequest<T> pagedRequest)
+    public async Task<Result<IEnumerable<T>>> GetPage(PagedRequest pagedRequest)
     {
         try
         {

@@ -6,10 +6,10 @@ namespace Domain.Entities.Ask;
 public class Question : ITypeScriptModel
 {
     [Key]
-    public int Id { get; set; }
+    public int Id { get; }
 
-    public int AskGameId { get; set; }
-    public string Text { get; set; } = default!;
+    public int AskGameId { get; private set; }
+    public string Text { get; private set; } = default!;
 
     public static Question Create(string text, int askGameId)
         => new()

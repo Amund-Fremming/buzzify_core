@@ -8,15 +8,13 @@ namespace Domain.Entities.Spin;
 
 public class SpinGame : GameBase, ITypeScriptModel
 {
-    public Category Category { get; set; }
-    public SpinGameState State { get; set; }
-    public string? HubGroupName { get; set; }
-    public IList<SpinPlayer> Players { get; set; } = [];
-    public IList<Challenge> Challenges { get; set; } = [];
-    public IList<SpinVote> Votes { get; set; } = [];
+    public Category Category { get; private set; }
+    public SpinGameState State { get; private set; }
+    public string? HubGroupName { get; private set; }
+    public IList<SpinPlayer> Players { get; private set; } = [];
+    public IList<Challenge> Challenges { get; private set; } = [];
+    public IList<SpinVote> Votes { get; private set; } = [];
 
-    // May be bad for performance, could just do a db check
-    // to see if any SpinGamePlayer instance has this playerId and gameId
     public Result AddPlayer(SpinPlayer player)
     {
         if (player is null)

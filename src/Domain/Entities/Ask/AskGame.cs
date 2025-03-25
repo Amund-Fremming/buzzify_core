@@ -8,10 +8,13 @@ namespace Domain.Entities.Ask;
 
 public class AskGame : GameBase, ITypeScriptModel
 {
-    public Category Category { get; set; }
-    public AskGameState State { get; set; }
-    public string? Description { get; set; }
-    public IList<Question> Questions { get; set; } = [];
+    public Category Category { get; private set; }
+    public AskGameState State { get; private set; }
+    public string? Description { get; private set; }
+    private List<Question> Questions { get; set; } = [];
+
+    protected AskGame()
+    { }
 
     public Result AddQuestion(Question question)
     {

@@ -23,7 +23,7 @@ public abstract class ReadControllerBase<T> : ControllerBase where T : GameBase
                 err => BadRequest(err.Message));
 
     [HttpGet("page")]
-    public async Task<ActionResult<IEnumerable<T>>> GetPage(PagedRequest<T> page)
+    public async Task<ActionResult<IEnumerable<T>>> GetPage(PagedRequest page)
         => (await _repository.GetPage(page))
             .Resolve(
                 suc => Ok(suc.Data),
