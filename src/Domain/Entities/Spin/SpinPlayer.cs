@@ -10,9 +10,8 @@ public class SpinPlayer : ITypeScriptModel
 
     public int SpinGameId { get; private set; }
     public int PlayerId { get; private set; }
-    public bool Host { get; private set; }
-
-    public void SetHost(bool host) => Host = host;
+    public bool Active { get; set; }
+    public bool Host { get; set; }
 
     public static SpinPlayer Create(int spinGameId, int playerId, bool? host = default)
         => new()

@@ -2,9 +2,6 @@
 
 ## Backend
 
-- AddPlayer
-	- Endre til hvis spiller finnes i spillet, sett til active
-	- Burde kanskje SpinGame opprette relasjonen og ikke av seg selv?
 - Endepunkt for å sjekke om spiller finnes
 - endepunkt for å gjøre spiller inactive med disconnect
 

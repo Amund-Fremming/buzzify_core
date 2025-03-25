@@ -23,19 +23,24 @@ public sealed class SpinGame : GameBase, ITypeScriptModel
     private SpinGame()
     { }
 
-    public Result AddPlayer(SpinPlayer player)
+    public Result AddPlayer(Player player, bool? isHost = false)
     {
         if (player is null)
         {
             return new Error("Player cannot be null.");
         }
 
-        if (_players.Contains(player))
+        var spinPlayer = _players.FirstOrDefault(p => p.PlayerId == player.Id);
+        if (spinPlayer is not null)
         {
-            return new Error("Player has already joined the game.");
+            spinPlayer.Active = true;
         }
 
-        _players.Add(player);
+        if (spinPlayer is null)
+        {
+            _players.Add(SpinPlayer.Create(Id, player.Id, isHost));
+        }
+
         return Result.Ok;
     }
 
