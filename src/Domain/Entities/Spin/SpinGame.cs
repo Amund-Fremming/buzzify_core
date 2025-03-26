@@ -70,6 +70,7 @@ public sealed class SpinGame : GameBase, ITypeScriptModel
     // StartSpin
     // StartGame
     // NextRound
+    public SpinGame PartialCopy() => Create(base.Name, base.Creator, this.Category);
 
     public static SpinGame Create(string name, Player? creator = null, Category? category = Category.Random)
         => new()

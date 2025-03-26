@@ -36,7 +36,23 @@ public sealed class AskGame : GameBase, ITypeScriptModel
     public Result<AskGame> StartGame()
     {
         State = AskGameState.Closed;
+        Shuffle();
         return this;
+    }
+
+    private void Shuffle()
+    {
+        var random = new Random();
+
+        int n = _questions.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = random.Next(n + 1);
+            var value = _questions[k];
+            _questions[k] = _questions[n];
+            _questions[n] = value;
+        }
     }
 
     public static AskGame Create(string name, Player? creator = null, string? description = default!, Category? category = Category.Random)
