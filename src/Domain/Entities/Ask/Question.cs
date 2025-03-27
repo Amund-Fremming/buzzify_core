@@ -13,6 +13,9 @@ public class Question : ITypeScriptModel
 
     public bool Active { get; set; }
 
+    private Question()
+    { }
+
     public static Question Create(string text, int askGameId)
         => new()
         {

@@ -1,5 +1,4 @@
 ﻿using Domain.Abstractions;
-using Domain.Entities.Shared;
 using Domain.Shared.Enums;
 using Domain.Shared.ResultPattern;
 using Domain.Shared.TypeScript;
@@ -18,31 +17,10 @@ public sealed class SpinGame : GameBase, ITypeScriptModel
 
     public IReadOnlyList<SpinPlayer> Players => _players.AsReadOnly();
     public IReadOnlyList<Challenge> Challenges => _challenges.AsReadOnly();
-    public IReadOnlyList<SpinVote> Votes { get; private set; } = [];
+    public IReadOnlyList<SpinVote> Votes => _votes.AsReadOnly();
 
     private SpinGame()
     { }
-
-    public Result AddPlayer(Player player, bool? isHost = false)
-    {
-        if (player is null)
-        {
-            return new Error("Player cannot be null.");
-        }
-
-        var spinPlayer = _players.FirstOrDefault(p => p.PlayerId == player.Id);
-        if (spinPlayer is not null)
-        {
-            spinPlayer.Active = true;
-        }
-
-        if (spinPlayer is null)
-        {
-            _players.Add(SpinPlayer.Create(Id, player.Id, isHost));
-        }
-
-        return Result.Ok;
-    }
 
     public Result AddChallenge(Challenge challenge)
     {
@@ -52,7 +30,7 @@ public sealed class SpinGame : GameBase, ITypeScriptModel
         }
 
         _challenges.Add(challenge);
-        IterationsCount++;
+        IterationCount++;
         return Result.Ok;
     }
 
@@ -70,16 +48,16 @@ public sealed class SpinGame : GameBase, ITypeScriptModel
     // StartSpin
     // StartGame
     // NextRound
-    public SpinGame PartialCopy() => Create(base.Name, base.Creator, this.Category);
+    public SpinGame PartialCopy() => Create(base.Name, Category);
 
-    public static SpinGame Create(string name, Player? creator = null, Category? category = Category.Random)
+    public static SpinGame Create(string name, Category? category = Category.Random, int? iterationCount = 0, int? currentIteration = 0)
         => new()
         {
             Category = category ?? Category.Random,
             State = SpinGameState.Initialized,
             UniversalId = Guid.NewGuid(),
-            CreatorId = creator?.Id ?? 0,
-            Creator = creator ?? Player.Empty,
             Name = name,
+            IterationCount = iterationCount ?? 0,
+            CurrentIteration = currentIteration ?? 0,
         };
 }

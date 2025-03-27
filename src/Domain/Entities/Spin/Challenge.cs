@@ -13,6 +13,9 @@ public class Challenge : ITypeScriptModel
     public string Text { get; private set; } = default!;
     public bool ReadBeforeSpin { get; private set; }
 
+    private Challenge()
+    { }
+
     public static Challenge Create(int roundId, int participantsCount, string text, bool? readBeforeSpin = false)
         => new()
         {

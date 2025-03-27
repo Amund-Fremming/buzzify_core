@@ -21,7 +21,7 @@ public sealed class AskGame : GameBase, ITypeScriptModel
     private AskGame()
     { }
 
-    public Result<int> AddQuestion(Question question, Player player)
+    public Result<int> AddQuestion(Question question, User player)
     {
         if (question is null)
         {
@@ -29,7 +29,7 @@ public sealed class AskGame : GameBase, ITypeScriptModel
         }
 
         _questions.Add(question);
-        IterationsCount++;
+        IterationCount++;
         return _questions.Count;
     }
 
@@ -55,16 +55,14 @@ public sealed class AskGame : GameBase, ITypeScriptModel
         }
     }
 
-    public static AskGame Create(string name, Player? creator = null, string? description = default!, Category? category = Category.Random)
+    public static AskGame Create(string name, string? description = default!, Category? category = Category.Random)
         => new()
         {
             Category = category ?? Category.Random,
             State = AskGameState.Initialized,
             UniversalId = Guid.NewGuid(),
-            CreatorId = creator?.Id ?? 0,
-            Creator = creator ?? Player.Empty,
             Name = name,
-            IterationsCount = 0,
+            IterationCount = 0,
             CurrentIteration = 0,
             Description = description,
         };

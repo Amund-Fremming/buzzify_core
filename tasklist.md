@@ -2,6 +2,8 @@
 
 ## Backend
 
+- Se på User, kan være det ikke går å lage koblings felles koblingstabell for GuesUser og User
+- AddPlayer finnes ikke i game lenger, ta tilbake?? eller kjøre for speed
 
 - Skrive changelog!!
 - utvide result pattern til å ha flere messages eller bare en, utvide tli å ha trace og metode for å hente dden øverste
