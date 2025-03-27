@@ -10,6 +10,10 @@ public sealed class Player : ITypeScriptModel
 
     public string? Hash { get; private set; }
 
+    public DateTime LastActive { get; private set; }
+
+    public void UpdateActivity() => LastActive = DateTime.Now;
+
     public static Player Create() => new() { Hash = Guid.NewGuid().ToString() };
 
     public static Player Empty => new() { Id = 0 };
