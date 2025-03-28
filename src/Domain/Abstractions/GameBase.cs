@@ -5,10 +5,10 @@ namespace Domain.Abstractions;
 public abstract class GameBase
 {
     [Key]
-    public int Id { get; set; }
+    public int Id { get; init; }
 
-    public Guid UniversalId { get; set; }
-    public string Name { get; set; } = default!;
+    public string? UniversalId { get; init; }
+    public string Name { get; init; } = default!;
     public int IterationCount { get; set; }
     public int CurrentIteration { get; set; }
 }

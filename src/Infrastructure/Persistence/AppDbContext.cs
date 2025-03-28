@@ -9,10 +9,10 @@ namespace Infrastructure.Persistence;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options), IAppDbContext
 {
-    private DbSet<UserBase> Users { get; set; }
-    private DbSet<SpinGame> SpinGames { get; set; }
-    private DbSet<SpinPlayer> SpinPlayers { get; set; }
-    private DbSet<AskGame> AskGames { get; set; }
+    public DbSet<UserBase> Users { get; set; }
+    public DbSet<SpinGame> SpinGames { get; set; }
+    public DbSet<SpinPlayer> SpinPlayers { get; set; }
+    public DbSet<AskGame> AskGames { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

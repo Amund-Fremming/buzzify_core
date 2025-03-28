@@ -50,12 +50,12 @@ public sealed class SpinGame : GameBase, ITypeScriptModel
     // NextRound
     public SpinGame PartialCopy() => Create(base.Name, Category);
 
-    public static SpinGame Create(string name, Category? category = Category.Random, int? iterationCount = 0, int? currentIteration = 0)
+    public SpinGame Create(string name, Category? category = Category.Random, int? iterationCount = 0, int? currentIteration = 0)
         => new()
         {
             Category = category ?? Category.Random,
             State = SpinGameState.Initialized,
-            UniversalId = Guid.NewGuid(),
+            UniversalId = $"{nameof(SpinGame)}:{Id}",
             Name = name,
             IterationCount = iterationCount ?? 0,
             CurrentIteration = currentIteration ?? 0,

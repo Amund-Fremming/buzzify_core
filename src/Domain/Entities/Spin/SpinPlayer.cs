@@ -7,10 +7,10 @@ namespace Domain.Entities.Spin;
 public class SpinPlayer : ITypeScriptModel
 {
     [Key]
-    public int Id { get; }
+    public int Id { get; init; }
 
-    public int SpinGameId { get; private set; }
-    public int PlayerId { get; private set; }
+    public int SpinGameId { get; init; }
+    public int PlayerId { get; init; }
     public bool Active { get; private set; }
     public bool Host { get; private set; }
     public bool Creator { get; private set; }

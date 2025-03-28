@@ -8,8 +8,8 @@ public class Question : ITypeScriptModel
     [Key]
     public int Id { get; }
 
-    public int AskGameId { get; private set; }
-    public string Text { get; private set; } = default!;
+    public int AskGameId { get; init; }
+    public string Text { get; init; } = default!;
 
     public bool Active { get; set; }
 

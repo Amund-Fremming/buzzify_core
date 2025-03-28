@@ -13,7 +13,7 @@ public sealed class AskGame : GameBase, ITypeScriptModel
 {
     public Category Category { get; private set; }
     public AskGameState State { get; private set; }
-    public string? Description { get; private set; }
+    public string? Description { get; init; }
 
     private readonly List<Question> _questions = [];
     public IReadOnlyList<Question> Questions => _questions.AsReadOnly();
@@ -55,12 +55,12 @@ public sealed class AskGame : GameBase, ITypeScriptModel
         }
     }
 
-    public static AskGame Create(string name, string? description = default!, Category? category = Category.Random)
+    public AskGame Create(string name, string? description = default!, Category? category = Category.Random)
         => new()
         {
             Category = category ?? Category.Random,
             State = AskGameState.Initialized,
-            UniversalId = Guid.NewGuid(),
+            UniversalId = $"{nameof(AskGame)}:{Id}",
             Name = name,
             IterationCount = 0,
             CurrentIteration = 0,

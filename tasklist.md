@@ -8,9 +8,11 @@
 - Skrive changelog!!
 - utvide result pattern til å ha flere messages eller bare en, utvide tli å ha trace og metode for å hente dden øverste
 - endre fra early return til liste med feilmeldinger ???
+
 - endepunkt for å oppdatere spillers activity
 - endepunkt for å sjekke om spiller finnes
 - endepunkt for å gjøre spiller inactive med disconnect
+
 - DDD methods on SpinGame
 
 - Performance test AddPlayer DDD vs service layer
