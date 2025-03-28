@@ -21,7 +21,7 @@ public sealed class AskGame : GameBase, ITypeScriptModel
     private AskGame()
     { }
 
-    public Result<int> AddQuestion(Question question, User player)
+    public Result<int> AddQuestion(Question question, RegisteredUser player)
     {
         if (question is null)
         {

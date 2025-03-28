@@ -1,9 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Abstractions;
+using Domain.Entities.Ask;
+using Domain.Entities.Spin;
+using Microsoft.EntityFrameworkCore;
 
 namespace Domain.Contracts;
 
 public interface IAppDbContext
 {
+    DbSet<UserBase> Users { get; set; }
+    DbSet<SpinGame> SpinGames { get; }
+    DbSet<SpinPlayer> SpinPlayers { get; }
+    DbSet<AskGame> AskGames { get; }
+
     DbSet<T> Entity<T>() where T : class;
 
     void ApplyChanges<T>(T entity) where T : class;

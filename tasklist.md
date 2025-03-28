@@ -12,7 +12,7 @@
 - endepunkt for å sjekke om spiller finnes
 - endepunkt for å gjøre spiller inactive med disconnect
 - DDD methods on SpinGame
-- Try to combine all assemblies in presenation to get api ts generation
+
 - Performance test AddPlayer DDD vs service layer
 - Admin dashboard
 	- Toggle notifications on app opening

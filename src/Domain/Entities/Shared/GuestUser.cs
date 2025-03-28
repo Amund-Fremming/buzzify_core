@@ -1,18 +1,10 @@
 ﻿using Domain.Abstractions;
 using Domain.Shared.TypeScript;
-using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Entities.Shared;
 
-public sealed class GuestUser : IUser, ITypeScriptModel
+public sealed class GuestUser : UserBase, ITypeScriptModel
 {
-    [Key]
-    public int Id { get; private set; }
-
-    public Guid Guid { get; private set; }
-
-    public DateTime LastActive { get; private set; }
-
     public void UpdateActivity() => LastActive = DateTime.Now;
 
     private GuestUser()
