@@ -18,7 +18,6 @@
 - Performance test AddPlayer DDD vs service layer
 - Admin dashboard
 	- Toggle notifications on app opening
-	- Delete game possibility
 	- Se antall aktive brukere nå, denne uken, denne måneden
 
 ## Frontend

@@ -12,6 +12,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<UserBase> Users { get; set; }
     public DbSet<SpinGame> SpinGames { get; set; }
     public DbSet<SpinPlayer> SpinPlayers { get; set; }
+    public DbSet<Vote> Votes { get; set; }
     public DbSet<AskGame> AskGames { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -40,6 +41,17 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             .HasOne(p => p.SpinGame)
             .WithMany(g => g.Players)
             .HasForeignKey(gp => gp.SpinGameId);
+
+        modelBuilder.Entity<Vote>()
+            .HasKey(v => v.Id);
+
+        modelBuilder.Entity<Vote>()
+            .HasOne(v => v.Game)
+            .WithMany(u => u.Votes)
+            .HasForeignKey(v => v.GameId);
+
+        modelBuilder.Entity<Vote>()
+            .HasIndex(v => new { v.GameType, v.GameId });
     }
 
     public void ApplyChanges<T>(T entity) where T : class => base.Update<T>(entity);

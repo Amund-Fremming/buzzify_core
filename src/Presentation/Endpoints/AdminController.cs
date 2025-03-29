@@ -11,4 +11,10 @@ public class AdminController : ControllerBase
     {
         throw new NotImplementedException();
     }
+
+    [HttpPost]
+    public async Task<IActionResult> SetModalNotification()
+    {
+        throw new NotImplementedException();
+    }
 }

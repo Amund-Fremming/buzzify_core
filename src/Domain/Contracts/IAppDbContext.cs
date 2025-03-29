@@ -1,5 +1,6 @@
 ﻿using Domain.Abstractions;
 using Domain.Entities.Ask;
+using Domain.Entities.Shared;
 using Domain.Entities.Spin;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +11,7 @@ public interface IAppDbContext
     DbSet<UserBase> Users { get; set; }
     DbSet<SpinGame> SpinGames { get; }
     DbSet<SpinPlayer> SpinPlayers { get; }
+    DbSet<Vote> Votes { get; }
     DbSet<AskGame> AskGames { get; }
 
     DbSet<T> Entity<T>() where T : class;

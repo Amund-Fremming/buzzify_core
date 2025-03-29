@@ -10,4 +10,6 @@ public abstract class UserBase : IUser
     public Guid Guid { get; set; }
 
     public DateTime LastActive { get; set; }
+
+    public IList<IVote> Votes { get; set; } = [];
 }
