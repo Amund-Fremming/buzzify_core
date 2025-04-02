@@ -2,6 +2,11 @@
 
 ## Backend
 
+
+- Fiks pagedReponse forOIRepo
+- ENDRE FRA ALLE SMÅ REPOER TIL Å BRUKE GENERISK REPO??!?!??!
+- Fikse en service els for å opprette en clone, kan ikke opprette en klone på innsiden av en klone?
+
 - Se på User, kan være det ikke går å lage koblings felles koblingstabell for GuesUser og User
 - AddPlayer finnes ikke i game lenger, ta tilbake?? eller kjøre for speed
 

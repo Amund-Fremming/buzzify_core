@@ -12,8 +12,6 @@ public class SpinPlayer : ITypeScriptModel
     public int SpinGameId { get; init; }
     public int PlayerId { get; init; }
     public bool Active { get; private set; }
-    public bool Host { get; private set; }
-    public bool Creator { get; private set; }
 
     public SpinGame SpinGame { get; private set; } = default!;
     public IUser User { get; private set; } = default!;
@@ -23,7 +21,5 @@ public class SpinPlayer : ITypeScriptModel
         {
             SpinGameId = spinGameId,
             PlayerId = playerId,
-            Host = host ?? false,
-            Creator = creator ?? false,
         };
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Domain.Entities.Shared;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Abstractions;
 
@@ -11,5 +12,5 @@ public abstract class UserBase : IUser
 
     public DateTime LastActive { get; set; }
 
-    public IList<IVote> Votes { get; set; } = [];
+    public IList<Vote> Votes { get; set; } = [];
 }

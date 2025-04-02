@@ -1,4 +1,5 @@
 ﻿using Domain.Abstractions;
+using Domain.Entities.Shared;
 using Domain.Shared.Enums;
 using Domain.Shared.ResultPattern;
 using Domain.Shared.TypeScript;
@@ -10,17 +11,14 @@ public sealed class SpinGame : GameBase, ITypeScriptModel
     public Category Category { get; private set; }
     public SpinGameState State { get; private set; }
     public string? HubGroupName { get; private set; }
+    public int HostId { get; private set; }
+    public IUser Host { get; private set; } = default!;
 
     private readonly IList<SpinPlayer> _players = [];
     private readonly IList<Challenge> _challenges = [];
-    private readonly IList<SpinVote> _votes = [];
 
     public IReadOnlyList<SpinPlayer> Players => _players.AsReadOnly();
     public IReadOnlyList<Challenge> Challenges => _challenges.AsReadOnly();
-    public IReadOnlyList<SpinVote> Votes => _votes.AsReadOnly();
-
-    private SpinGame()
-    { }
 
     public Result AddChallenge(Challenge challenge)
     {
@@ -34,7 +32,7 @@ public sealed class SpinGame : GameBase, ITypeScriptModel
         return Result.Ok;
     }
 
-    public Result Upvote(SpinVote vote)
+    public Result Upvote(Vote vote)
     {
         if (vote is null)
         {
@@ -48,9 +46,8 @@ public sealed class SpinGame : GameBase, ITypeScriptModel
     // StartSpin
     // StartGame
     // NextRound
-    public SpinGame PartialCopy() => Create(base.Name, Category);
 
-    public SpinGame Create(string name, Category? category = Category.Random, int? iterationCount = 0, int? currentIteration = 0)
+    public SpinGame Create(string name, int hostId, Category? category = Category.Random, int? iterationCount = 0, int? currentIteration = 0)
         => new()
         {
             Category = category ?? Category.Random,
@@ -59,5 +56,6 @@ public sealed class SpinGame : GameBase, ITypeScriptModel
             Name = name,
             IterationCount = iterationCount ?? 0,
             CurrentIteration = currentIteration ?? 0,
+            HostId = hostId,
         };
 }

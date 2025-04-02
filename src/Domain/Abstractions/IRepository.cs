@@ -7,7 +7,7 @@ public interface IRepository<T> where T : class
 {
     Task<Result<T>> GetById(int id);
 
-    Task<Result<IEnumerable<T>>> GetPage(PagedRequest pagedRequest);
+    Task<Result<PagedResponse<T>>> GetPage(PagedRequest pagedRequest);
 
     Task<Result<IEnumerable<T>>> GetAll();
 

@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Abstractions;
 
-public abstract class RepositoryBase<T>(IAppDbContext context) : IRepository<T> where T : class
+public class GenericRepository(IAppDbContext context) : IGenericRepository
 {
-    public async Task<Result<T>> GetById(int id)
+    public async Task<Result<T>> GetById<T>(int id) where T : class
     {
         try
         {
@@ -28,7 +28,7 @@ public abstract class RepositoryBase<T>(IAppDbContext context) : IRepository<T> 
         }
     }
 
-    public async Task<Result<PagedResponse<T>>> GetPage(PagedRequest pagedRequest)
+    public async Task<Result<PagedResponse<T>>> GetPage<T>(PagedRequest pagedRequest) where T : class
     {
         try
         {
@@ -41,7 +41,8 @@ public abstract class RepositoryBase<T>(IAppDbContext context) : IRepository<T> 
                 .Skip(pagedRequest.Skip)
                 .ToListAsync();
 
-            return PagedResponse<T>.Create(count, pagedRequest.PageNumber, data);
+            var page = PagedResponse<T>.Create(count, pagedRequest.PageNumber, data);
+            return page;
         }
         catch (Exception ex)
         {
@@ -49,27 +50,12 @@ public abstract class RepositoryBase<T>(IAppDbContext context) : IRepository<T> 
         }
     }
 
-    public async Task<Result<IEnumerable<T>>> GetAll()
-    {
-        try
-        {
-            return await context.Entity<T>()
-                .AsNoTracking()
-                .ToListAsync();
-        }
-        catch (Exception ex)
-        {
-            return new Error(ex.Message, ex);
-        }
-    }
-
-    public async Task<Result> Create(T entity)
+    public async Task<Result> Create<T>(T entity) where T : class
     {
         try
         {
             await context.AddAsync(entity);
             await context.SaveChangesAsync();
-
             return Result.Ok;
         }
         catch (Exception ex)
@@ -78,13 +64,12 @@ public abstract class RepositoryBase<T>(IAppDbContext context) : IRepository<T> 
         }
     }
 
-    public async Task<Result> Update(T entity)
+    public async Task<Result> Update<T>(T entity) where T : class
     {
         try
         {
             context.ApplyChanges(entity);
             await context.SaveChangesAsync();
-
             return Result.Ok;
         }
         catch (Exception ex)
@@ -93,11 +78,11 @@ public abstract class RepositoryBase<T>(IAppDbContext context) : IRepository<T> 
         }
     }
 
-    public async Task<Result> Delete(int id)
+    public async Task<Result> Delete<T>(int id) where T : class
     {
         try
         {
-            var result = await GetById(id);
+            var result = await GetById<T>(id);
             if (result.IsError)
             {
                 return result.Error;
