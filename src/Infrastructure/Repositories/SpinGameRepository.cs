@@ -1,5 +1,4 @@
 ﻿using Domain.Contracts;
-using Domain.Entities.Ask;
 using Domain.Entities.Spin;
 using Domain.Shared.ResultPattern;
 using Infrastructure.Abstractions;
@@ -11,7 +10,7 @@ public class SpinGameRepository(IAppDbContext context) : RepositoryBase<SpinGame
 {
     private readonly IAppDbContext _context = context;
 
-    public async Task<Result<AskGame>> GetGameWithPlayersAndChallenges(int id)
+    public async Task<Result<SpinGame>> GetGameWithPlayersAndChallenges(int id)
     {
         try
         {
