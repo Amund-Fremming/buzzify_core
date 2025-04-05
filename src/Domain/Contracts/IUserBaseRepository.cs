@@ -1,4 +1,5 @@
-﻿using Domain.Entities.Shared;
+﻿using Domain.Abstractions;
+using Domain.Entities.Shared;
 using Domain.Shared.ResultPattern;
 
 namespace Domain.Contracts;
@@ -10,4 +11,6 @@ public interface IUserBaseRepository
     Task<Result<RegisteredUser>> UpdateRegisteredUser(RegisteredUser user);
 
     Task<Result<GuestUser>> CreateGuestUser(GuestUser user);
+
+    Task<Result<List<UserBase>>> GetActiveUsersFrom(DateTime dateTime);
 }

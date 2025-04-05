@@ -1,4 +1,5 @@
-﻿using Domain.Contracts;
+﻿using Domain.Abstractions;
+using Domain.Contracts;
 using Domain.Entities.Shared;
 using Domain.Shared.ResultPattern;
 
@@ -43,6 +44,19 @@ public class UserBaseRepository(IAppDbContext context) : IUserBaseRepository
         catch (Exception ex)
         {
             return new Error(nameof(CreateRegisteredUser), ex);
+        }
+    }
+
+    public Result<List<UserBase>> GetActiveUsersFrom(DateTime dateTime)
+    {
+        try
+        {
+            return context.Users.Where(u => u.LastActive < dateTime)
+                .ToList();
+        }
+        catch (Exception ex)
+        {
+            return new Error(nameof(GetActiveUsersFrom), ex);
         }
     }
 }

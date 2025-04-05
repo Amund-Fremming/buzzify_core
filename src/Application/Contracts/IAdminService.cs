@@ -5,9 +5,15 @@ namespace Application.Contracts;
 
 public interface IAdminService
 {
-    Task<Result<UserActivityData>> GetUserActivityData(int passCode);
+    Task<Result<UserActivityData>> GetWeeklyActivity(int passCode, int iterationsBackwards);
 
-    Task<Result> DeactivateNotification(int passCode);
+    Task<Result<UserActivityData>> GetMonthlyActivity(int passCode, int iterationsBackwards);
 
-    Task<Result> ActivateNotification(int passCode, string heading, string message, string color);
+    Task<Result> DeactivateNotification(int id, int passCode);
+
+    Task<Result> ActivateNotification(int id, int passCode);
+
+    Task<Result> CreateNotification(int passCode, string heading, string message, string color);
+
+    Task<Result<ModalNotification>> GetAll(int passCode);
 }
