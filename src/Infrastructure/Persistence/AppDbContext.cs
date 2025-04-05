@@ -28,7 +28,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             .HasKey(u => u.Id);
 
         modelBuilder.Entity<SpinPlayer>()
-            .HasIndex(p => new { p.SpinGameId, p.PlayerId })
+            .HasIndex(p => new { p.UserId, p.GameId })
             .IsUnique();
 
         modelBuilder.Entity<AskGame>()
@@ -40,7 +40,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         modelBuilder.Entity<SpinPlayer>()
             .HasOne(p => p.SpinGame)
             .WithMany(g => g.Players)
-            .HasForeignKey(gp => gp.SpinGameId);
+            .HasForeignKey(gp => gp.GameId);
 
         modelBuilder.Entity<Vote>()
             .HasKey(v => v.Id);

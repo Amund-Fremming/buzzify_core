@@ -15,9 +15,9 @@ public class GenericRepository(IAppDbContext context) : IGenericRepository
             var entity = await context.Entity<T>()
                 .FindAsync(id);
 
-            if (entity != null)
+            if (entity == null)
             {
-                return entity;
+                return new EmptyResult();
             }
 
             return new Error($"{typeof(T)} with id {id}, does not exist.");

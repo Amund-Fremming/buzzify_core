@@ -28,11 +28,4 @@ public abstract class ReadControllerBase<T> : ControllerBase where T : class
             .Resolve(
                 suc => Ok(suc.Data),
                 err => BadRequest(err.Message));
-
-    [HttpGet("all")]
-    public async Task<ActionResult<IEnumerable<T>>> GetAll()
-        => (await _repository.GetAll())
-            .Resolve(
-                suc => Ok(suc.Data),
-                err => BadRequest(err.Message));
 }

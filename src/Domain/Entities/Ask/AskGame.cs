@@ -1,5 +1,4 @@
 ﻿using Domain.Abstractions;
-using Domain.Entities.Shared;
 using Domain.Shared.Enums;
 using Domain.Shared.ResultPattern;
 using Domain.Shared.TypeScript;
@@ -11,6 +10,7 @@ namespace Domain.Entities.Ask;
 /// </summary>
 public sealed class AskGame : GameBase, ITypeScriptModel
 {
+    public int CreatorId { get; set; }
     public Category Category { get; private set; }
     public AskGameState State { get; private set; }
     public string? Description { get; init; }
@@ -21,7 +21,7 @@ public sealed class AskGame : GameBase, ITypeScriptModel
     private AskGame()
     { }
 
-    public Result<int> AddQuestion(Question question, RegisteredUser player)
+    public Result<int> AddQuestion(Question question)
     {
         if (question is null)
         {
@@ -33,8 +33,13 @@ public sealed class AskGame : GameBase, ITypeScriptModel
         return _questions.Count;
     }
 
-    public Result<AskGame> StartGame()
+    public Result<AskGame> StartGame(int userId)
     {
+        if (userId != CreatorId)
+        {
+            return new Error($"User with id {userId} does not have access to this game.");
+        }
+
         State = AskGameState.Closed;
         Shuffle();
         return this;
@@ -55,12 +60,13 @@ public sealed class AskGame : GameBase, ITypeScriptModel
         }
     }
 
-    public AskGame Create(string name, string? description = default!, Category? category = Category.Random)
+    public static AskGame Create(int userId, string name, string? description = null!, Category? category = Category.Random)
         => new()
         {
+            CreatorId = userId,
             Category = category ?? Category.Random,
             State = AskGameState.Initialized,
-            UniversalId = $"{nameof(AskGame)}:{Id}",
+            UniversalId = $"{nameof(AskGame)}:{Guid.NewGuid()}",
             Name = name,
             IterationCount = 0,
             CurrentIteration = 0,

@@ -47,12 +47,12 @@ public sealed class SpinGame : GameBase, ITypeScriptModel
     // StartGame
     // NextRound
 
-    public SpinGame Create(string name, int hostId, Category? category = Category.Random, int? iterationCount = 0, int? currentIteration = 0)
+    public static SpinGame Create(string name, int hostId, Category? category = Category.Random, int? iterationCount = 0, int? currentIteration = 0)
         => new()
         {
             Category = category ?? Category.Random,
             State = SpinGameState.Initialized,
-            UniversalId = $"{nameof(SpinGame)}:{Id}",
+            UniversalId = $"{nameof(SpinGame)}:{Guid.NewGuid()}",
             Name = name,
             IterationCount = iterationCount ?? 0,
             CurrentIteration = currentIteration ?? 0,

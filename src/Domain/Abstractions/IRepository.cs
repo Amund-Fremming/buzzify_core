@@ -11,7 +11,7 @@ public interface IRepository<T> where T : class
 
     Task<Result<IEnumerable<T>>> GetAll();
 
-    Task<Result> Create(T entity);
+    Task<Result<T>> Create(T entity);
 
     Task<Result> Update(T entity);
 

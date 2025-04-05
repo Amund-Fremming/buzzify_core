@@ -15,12 +15,12 @@ public abstract class RepositoryBase<T>(IAppDbContext context) : IRepository<T> 
             var entity = await context.Entity<T>()
                 .FindAsync(id);
 
-            if (entity != null)
+            if (entity is null)
             {
-                return entity;
+                return new EmptyResult();
             }
 
-            return new Error($"{typeof(T)} with id {id}, does not exist.");
+            return entity;
         }
         catch (Exception ex)
         {
@@ -63,14 +63,14 @@ public abstract class RepositoryBase<T>(IAppDbContext context) : IRepository<T> 
         }
     }
 
-    public async Task<Result> Create(T entity)
+    public async Task<Result<T>> Create(T entity)
     {
         try
         {
             await context.AddAsync(entity);
             await context.SaveChangesAsync();
 
-            return Result.Ok;
+            return entity;
         }
         catch (Exception ex)
         {

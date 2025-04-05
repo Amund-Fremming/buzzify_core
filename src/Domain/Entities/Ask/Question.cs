@@ -16,11 +16,11 @@ public class Question : ITypeScriptModel
     private Question()
     { }
 
-    public static Question Create(string text, int askGameId)
+    public static Question Create(int gameId, string text)
         => new()
         {
             Text = text,
-            AskGameId = askGameId,
+            AskGameId = gameId,
             Active = true
         };
 }

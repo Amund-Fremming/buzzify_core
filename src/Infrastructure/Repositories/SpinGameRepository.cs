@@ -29,6 +29,24 @@ public class SpinGameRepository(IAppDbContext context) : RepositoryBase<SpinGame
         catch (Exception ex)
         {
             return new Error(nameof(GetGameWithPlayersAndChallenges), ex);
-        };
+        }
+    }
+
+    public async Task<Result<SpinPlayer>> GetPlayer(int userId, int gameId)
+    {
+        try
+        {
+            var player = await _context.SpinPlayers.FirstOrDefaultAsync(p => p.UserId == userId && p.GameId == gameId);
+            if (player is null)
+            {
+                return new EmptyResult();
+            }
+
+            return player;
+        }
+        catch (Exception ex)
+        {
+            return new Error(nameof(GetPlayer), ex);
+        }
     }
 }

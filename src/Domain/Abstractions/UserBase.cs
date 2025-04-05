@@ -13,4 +13,6 @@ public abstract class UserBase : IUser
     public DateTime LastActive { get; set; }
 
     public IList<Vote> Votes { get; set; } = [];
+
+    public void UpdateActivity() => LastActive = DateTime.Now;
 }
