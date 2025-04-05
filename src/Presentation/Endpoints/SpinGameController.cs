@@ -7,9 +7,4 @@ namespace Presentation.Endpoints;
 [Route("api/v1/[controller]")]
 public class SpinGameController : ReadControllerBase<SpinGame>
 {
-    [HttpGet]
-    public async Task<IActionResult> PlayerExists()
-    {
-        throw new NotImplementedException();
-    }
 }

@@ -59,4 +59,9 @@ public class UserBaseRepository(IAppDbContext context) : IUserBaseRepository
             return new Error(nameof(GetActiveUsersFrom), ex);
         }
     }
+
+    Task<Result<List<UserBase>>> IUserBaseRepository.GetActiveUsersFrom(DateTime dateTime)
+    {
+        throw new NotImplementedException();
+    }
 }
