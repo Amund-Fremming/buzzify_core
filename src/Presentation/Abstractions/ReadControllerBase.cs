@@ -1,5 +1,4 @@
 ﻿using Domain.Abstractions;
-using Domain.Exceptions;
 using Domain.Shared.Pagination;
 using Domain.Shared.ResultPattern;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +12,7 @@ public abstract class ReadControllerBase<T> : ControllerBase where T : class
 
     public ReadControllerBase()
         => _repository = HttpContext.RequestServices.GetService<IRepository<T>>()
-            ?? throw new RepositoryNotFoundException(nameof(IRepository<T>));
+            ?? throw new Exception(nameof(IRepository<T>));
 
     [HttpGet]
     public async Task<ActionResult<T>> Get(int id)

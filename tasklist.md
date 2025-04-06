@@ -3,16 +3,7 @@
 ## Backend
 
 
-- Fiks pagedReponse forOIRepo
-- ENDRE FRA ALLE SMÅ REPOER TIL Å BRUKE GENERISK REPO??!?!??!
-- Fikse en service els for å opprette en clone, kan ikke opprette en klone på innsiden av en klone?
-
-- Se på User, kan være det ikke går å lage koblings felles koblingstabell for GuesUser og User
-- AddPlayer finnes ikke i game lenger, ta tilbake?? eller kjøre for speed
-
-- Skrive changelog!!
-- utvide result pattern til å ha flere messages eller bare en, utvide tli å ha trace og metode for å hente dden øverste
-- endre fra early return til liste med feilmeldinger ???
+- Få inn warnings as errors og ubrukte variabler som feil
 
 - endepunkt for å oppdatere spillers activity
 - endepunkt for å sjekke om spiller finnes
@@ -20,21 +11,11 @@
 
 - DDD methods on SpinGame
 
-- Performance test AddPlayer DDD vs service layer
-- Admin dashboard
-	- Toggle notifications on app opening
-	- Se antall aktive brukere nå, denne uken, denne måneden
-
 ## Frontend
-- Endre InfoModal til å eksportere to funksjoner, toggle error og ikke, ikke bruk bool inn, det er vanskelig å forstå
-- Providers
-	- Global state
-	- Service provider
-	- Connection
+- Firebase Analysis
+- Service
+- Connection provider
 		- Must have a api call to remove the player from the game (set to inactive)
-	- Game specific
-- Analysis
-	- Firebase
 
 ## DB Optimalisering
 - Pooling

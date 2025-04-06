@@ -50,4 +50,6 @@ public class AskGameManager(IAskGameRepository gameRepository) : IAskGameManager
         var startResult = result.Data.StartGame(userId);
         return startResult;
     }
+
+    public Task<Result<AskGame>> StartExistingGame(int userId, int gameId) => throw new NotImplementedException();
 }

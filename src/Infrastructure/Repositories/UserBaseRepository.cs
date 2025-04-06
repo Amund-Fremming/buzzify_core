@@ -2,6 +2,7 @@
 using Domain.Contracts;
 using Domain.Entities.Shared;
 using Domain.Shared.ResultPattern;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
 
@@ -60,8 +61,21 @@ public class UserBaseRepository(IAppDbContext context) : IUserBaseRepository
         }
     }
 
-    Task<Result<List<UserBase>>> IUserBaseRepository.GetActiveUsersFrom(DateTime dateTime)
+    public async Task<Result<List<UserBase>>> GetAll()
     {
-        throw new NotImplementedException();
+        try
+        {
+            var result = await context.Users.ToListAsync();
+            if (result is null)
+            {
+                return new List<UserBase>();
+            }
+
+            return result;
+        }
+        catch (Exception ex)
+        {
+            return new Error(nameof(GetAll), ex);
+        }
     }
 }

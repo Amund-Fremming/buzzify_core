@@ -14,4 +14,6 @@ public interface IGenericRepository
     Task<Result> Update<T>(T entity) where T : class;
 
     Task<Result> Delete<T>(int id) where T : class;
+
+    Task<Result<List<T>>> GetAll<T>() where T : class;
 }

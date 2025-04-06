@@ -12,5 +12,5 @@ public interface IUserBaseRepository
 
     Task<Result<GuestUser>> CreateGuestUser(GuestUser user);
 
-    Task<Result<List<UserBase>>> GetActiveUsersFrom(DateTime dateTime);
+    Task<Result<List<UserBase>>> GetAll();
 }

@@ -47,6 +47,12 @@ public sealed class SpinGame : GameBase, ITypeScriptModel
     // StartGame
     // NextRound
 
+    public SpinGame AsCopy()
+    {
+        State = SpinGameState.ChallengesClosed;
+        return this;
+    }
+
     public static SpinGame Create(string name, int hostId, Category? category = Category.Random, int? iterationCount = 0, int? currentIteration = 0)
         => new()
         {

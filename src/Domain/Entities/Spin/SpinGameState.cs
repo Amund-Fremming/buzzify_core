@@ -3,6 +3,7 @@
 public enum SpinGameState
 {
     Initialized,
+    ChallengesClosed,
     RoundStarted,
     Spinner,
     RoundFinished,

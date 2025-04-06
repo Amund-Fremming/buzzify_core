@@ -8,7 +8,7 @@ public class ModalNotification
     public string OutlineHexColor { get; private set; } = string.Empty;
     public bool DisplayNotification { get; private set; }
 
-    public bool Deactivate() => DisplayNotification = false;
+    public void SetDisplayNotification(bool displayNotification) => DisplayNotification = displayNotification;
 
     public static ModalNotification Create(string heading, string message, string outlineHexColor)
         => new()

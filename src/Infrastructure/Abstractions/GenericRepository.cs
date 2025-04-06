@@ -99,4 +99,24 @@ public class GenericRepository(IAppDbContext context) : IGenericRepository
             return new Error(ex.Message, ex);
         }
     }
+
+    public async Task<Result<List<T>>> GetAll<T>() where T : class
+    {
+        try
+        {
+            var result = await context.Entity<T>()
+                .ToListAsync();
+
+            if (result is null)
+            {
+                return new List<T>();
+            }
+
+            return result;
+        }
+        catch (Exception ex)
+        {
+            return new Error(nameof(GetAll), ex);
+        }
+    }
 }
