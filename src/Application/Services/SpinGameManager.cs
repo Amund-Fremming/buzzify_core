@@ -59,4 +59,8 @@ public class SpinGameManager(ISpinGameRepository spinGameRepository, IGenericRep
             suc => suc,
             err => err.Error);
     }
+
+    public Task<Result<SpinGame>> StartExistingGame(int userId, int gameId) => throw new NotImplementedException();
+
+    public Task<Result<SpinGame>> StartGame(int userId, int gameId) => throw new NotImplementedException();
 }

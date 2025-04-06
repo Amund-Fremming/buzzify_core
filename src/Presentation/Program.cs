@@ -1,5 +1,5 @@
 using Application;
-using Domain.Shared.TypeScript;
+using Domain.Entities;
 using Infrastructure;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -19,9 +19,10 @@ services
     .AddInfrastructure()
     .AddApplication();
 
-services.AddTypeScriptSupport(o =>
+services.AddHttpClient(nameof(BeerPrice), client =>
 {
-    // Add fe folder path
+    var baseUrlString = builder.Configuration["BeerPrices:Url"] ?? throw new InvalidOperationException("BeerPrices url does not exist.");
+    client.BaseAddress = new Uri(baseUrlString);
 });
 
 services.AddDbContext<AppDbContext>(o =>
