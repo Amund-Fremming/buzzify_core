@@ -1,10 +1,9 @@
 ﻿namespace Domain.Shared.ResultPattern;
 
-public sealed record Result<T>(T Data, Error Error) : IResult, IResult<T>
+public sealed record Result<T>(T Data, Error Error, EmptyResult? EmptyResult = null) : IResult, IResult<T>
 {
+    public bool IsEmpty => EmptyResult != null;
     public bool IsError => Error is not null && Error.Message is not null;
-
-    public bool IsEmpty => Error is null && Data is null;
 
     public string Message => Error!.Message;
 
@@ -13,7 +12,8 @@ public sealed record Result<T>(T Data, Error Error) : IResult, IResult<T>
     public static implicit operator Result<T>(T data) => new(data, null!);
 
     public static implicit operator Result<T>(Error error) => new(default!, error);
-    public static implicit operator Result<T>(EmptyResult emptyResult) => new(default!, null!);
+
+    public static implicit operator Result<T>(EmptyResult emptyResult) => new(default!, new Error("Entity does not exist"), emptyResult);
 }
 
 public sealed record Result(Error Error) : IResult

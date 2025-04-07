@@ -1,5 +1,5 @@
 using Application;
-using Domain.Entities;
+using Domain.Entities.Hub;
 using Infrastructure;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;

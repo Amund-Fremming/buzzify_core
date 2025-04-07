@@ -1,5 +1,5 @@
 ﻿using Domain.Contracts;
-using Domain.Entities;
+using Domain.Entities.Hub;
 using Domain.Shared.ResultPattern;
 
 namespace Infrastructure.External;

@@ -25,7 +25,7 @@ public class AskGameManager(IAskGameRepository gameRepository) : IAskGameManager
         var result = await gameRepository.GetById(gameId);
         if (result.IsError || result.IsEmpty)
         {
-            return result.Error ?? new Error($"Game with id {gameId} does not exist.");
+            return result.Error;
         }
 
         var question = Question.Create(gameId, text);
@@ -44,7 +44,7 @@ public class AskGameManager(IAskGameRepository gameRepository) : IAskGameManager
         var result = await gameRepository.GetById(gameId);
         if (result.IsError || result.IsEmpty)
         {
-            return result.Error ?? new Error($"Game with id {gameId} does not exist.");
+            return result.Error;
         }
 
         var startResult = result.Data.StartGame(userId);

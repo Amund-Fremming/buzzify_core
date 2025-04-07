@@ -20,7 +20,7 @@ public class AdminService(IGenericRepository genericRepository, IUserBaseReposit
         var result = await genericRepository.GetById<ModalNotification>(id);
         if (result.IsError || result.IsEmpty)
         {
-            return result.Error ?? new Error($"Modal notification with id {id} does not exist.");
+            return result.Error;
         }
 
         result.Data.SetDisplayNotification(displayNotification);

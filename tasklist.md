@@ -3,6 +3,9 @@
 ## Backend
 
 
+- Background job, hente periodisk data fra billig pils
+- Logger service som gir meldinger til admin consol??
+
 - Få inn warnings as errors og ubrukte variabler som feil
 
 - endepunkt for å oppdatere spillers activity
