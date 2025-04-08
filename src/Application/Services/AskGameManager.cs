@@ -39,7 +39,7 @@ public class AskGameManager(IAskGameRepository gameRepository) : IAskGameManager
         return updateResult;
     }
 
-    public async Task<Result<AskGame>> StartGame(int userId, int gameId)
+    public async Task<Result<AskGame>> StartGame(int gameId)
     {
         var result = await gameRepository.GetById(gameId);
         if (result.IsError || result.IsEmpty)
@@ -47,9 +47,7 @@ public class AskGameManager(IAskGameRepository gameRepository) : IAskGameManager
             return result.Error;
         }
 
-        var startResult = result.Data.StartGame(userId);
+        var startResult = result.Data.StartGame();
         return startResult;
     }
-
-    public Task<Result<AskGame>> StartExistingGame(int userId, int gameId) => throw new NotImplementedException();
 }

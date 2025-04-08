@@ -2,19 +2,16 @@
 
 ## Backend
 
-
-- Background job, hente periodisk data fra billig pils
-- Logger service som gir meldinger til admin consol??
+- BeerPrices lagres i DB (Se model i Domain)
+- BackgroundService for å hente ut data, lagre i db
+- Logger service med enum tags for error level
 
 - Få inn warnings as errors og ubrukte variabler som feil
-
-- endepunkt for å oppdatere spillers activity
-- endepunkt for å sjekke om spiller finnes
-- endepunkt for å gjøre spiller inactive med disconnect
-
 - DDD methods on SpinGame
 
 ## Frontend
+- Modal som vises om versjon er utdatert
+- varslinger
 - Firebase Analysis
 - Service
 - Connection provider

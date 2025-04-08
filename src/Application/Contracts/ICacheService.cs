@@ -1,5 +1,5 @@
 ﻿namespace Application.Contracts;
 
-public interface ICacheHandler
+public interface ICacheService
 {
 }

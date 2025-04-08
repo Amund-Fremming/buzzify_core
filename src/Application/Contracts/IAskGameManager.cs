@@ -10,7 +10,5 @@ public interface IAskGameManager
 
     Task<Result> AddQuestion(int gameId, string question);
 
-    Task<Result<AskGame>> StartGame(int userId, int gameId);
-
-    Task<Result<AskGame>> StartExistingGame(int userId, int gameId);
+    Task<Result<AskGame>> StartGame(int gameId);
 }

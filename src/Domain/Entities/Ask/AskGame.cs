@@ -1,7 +1,6 @@
 ﻿using Domain.Abstractions;
 using Domain.Shared.Enums;
 using Domain.Shared.ResultPattern;
-using Domain.Shared.TypeScript;
 
 namespace Domain.Entities.Ask;
 
@@ -33,13 +32,8 @@ public sealed class AskGame : GameBase, ITypeScriptModel
         return _questions.Count;
     }
 
-    public Result<AskGame> StartGame(int userId)
+    public Result<AskGame> StartGame()
     {
-        if (userId != CreatorId)
-        {
-            return new Error($"User with id {userId} does not have access to this game.");
-        }
-
         State = AskGameState.Closed;
         Shuffle();
         return this;

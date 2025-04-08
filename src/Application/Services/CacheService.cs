@@ -2,6 +2,6 @@
 
 namespace Application.Services;
 
-public class CacheHandler : ICacheHandler
+public class CacheService : ICacheService
 {
 }
