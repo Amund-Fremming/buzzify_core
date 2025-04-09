@@ -1,10 +1,9 @@
 ﻿using Domain.Abstractions;
-using Domain.Shared.TypeScript;
 using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Entities.Spin;
 
-public class SpinPlayer : ITypeScriptModel
+public class SpinPlayer
 {
     [Key]
     public int Id { get; init; }
@@ -15,6 +14,9 @@ public class SpinPlayer : ITypeScriptModel
 
     public SpinGame SpinGame { get; private set; } = default!;
     public IUser User { get; private set; } = default!;
+
+    private SpinPlayer()
+    { }
 
     public void SetActive(bool active) => Active = active;
 

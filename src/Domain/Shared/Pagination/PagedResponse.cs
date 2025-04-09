@@ -10,6 +10,8 @@ public sealed record PagedResponse<T>
     public bool HasNextPage => CurrentPage < PageCount;
     public bool HasPrevPage => PageSize > 0;
 
+    private PagedResponse() { }
+
     public static PagedResponse<T> Create(int totalItems, int currentPage, IList<T> data)
        => new()
        {

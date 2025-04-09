@@ -1,9 +1,8 @@
-﻿using Domain.Shared.TypeScript;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Entities.Ask;
 
-public class Question : ITypeScriptModel
+public class Question
 {
     [Key]
     public int Id { get; }

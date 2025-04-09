@@ -8,6 +8,9 @@ public sealed class RegisteredUser : UserBase
     public string Name { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
 
+    private RegisteredUser()
+    { }
+
     public static RegisteredUser Create(string authId, string name, string email)
         => new()
         {

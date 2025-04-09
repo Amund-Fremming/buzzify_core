@@ -10,6 +10,9 @@ public class ModalNotification
 
     public void SetDisplayNotification(bool displayNotification) => DisplayNotification = displayNotification;
 
+    private ModalNotification()
+    { }
+
     public static ModalNotification Create(string heading, string message, string outlineHexColor)
         => new()
         {

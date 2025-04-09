@@ -1,9 +1,8 @@
-﻿using Domain.Shared.TypeScript;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Entities.Spin;
 
-public class Challenge : ITypeScriptModel
+public class Challenge
 {
     [Key]
     public int Id { get; }

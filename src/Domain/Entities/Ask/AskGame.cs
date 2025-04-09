@@ -7,7 +7,7 @@ namespace Domain.Entities.Ask;
 /// <summary>
 /// The game logic is entirely managed on the client side.
 /// </summary>
-public sealed class AskGame : GameBase, ITypeScriptModel
+public sealed class AskGame : GameBase
 {
     public int CreatorId { get; set; }
     public Category Category { get; private set; }
