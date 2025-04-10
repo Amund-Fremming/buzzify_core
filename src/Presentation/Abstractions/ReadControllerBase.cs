@@ -6,24 +6,18 @@ using Microsoft.AspNetCore.Mvc;
 namespace Presentation.Abstractions;
 
 [ApiController]
-public abstract class ReadControllerBase<T> : ControllerBase where T : class
+public abstract class ReadControllerBase<T>(IGenericRepository repository) : ControllerBase where T : class
 {
-    private readonly IRepository<T> _repository;
-
-    public ReadControllerBase()
-        => _repository = HttpContext.RequestServices.GetService<IRepository<T>>()
-            ?? throw new Exception(nameof(IRepository<T>));
-
     [HttpGet]
     public async Task<ActionResult<T>> Get(int id)
-        => (await _repository.GetById(id))
+        => (await repository.GetById<T>(id))
             .Resolve(
                 suc => Ok(suc.Data),
                 err => BadRequest(err.Message));
 
     [HttpGet("page")]
     public async Task<ActionResult<IEnumerable<T>>> GetPage(PagedRequest page)
-        => (await _repository.GetPage(page))
+        => (await repository.GetPage<T>(page))
             .Resolve(
                 suc => Ok(suc.Data),
                 err => BadRequest(err.Message));

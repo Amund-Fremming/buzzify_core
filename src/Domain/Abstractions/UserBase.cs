@@ -1,5 +1,4 @@
-﻿using Domain.Entities.Shared;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Abstractions;
 
@@ -11,8 +10,6 @@ public abstract class UserBase : IUser
     public Guid Guid { get; set; }
 
     public DateTime LastActive { get; set; }
-
-    public IList<Vote> Votes { get; set; } = [];
 
     public void UpdateActivity() => LastActive = DateTime.Now;
 }

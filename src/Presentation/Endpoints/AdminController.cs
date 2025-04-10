@@ -37,6 +37,7 @@ public class AdminController(IAdminService service) : ControllerBase
                   suc => Ok(),
                   err => BadRequest(err.Message));
 
+    [HttpGet("notification/all")]
     public async Task<IActionResult> GetAllNotifications([FromBody] int passCode)
         => (await service.GetAll(passCode))
             .Resolve(

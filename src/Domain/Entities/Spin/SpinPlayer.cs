@@ -13,7 +13,7 @@ public class SpinPlayer
     private bool Active { get; set; }
 
     public SpinGame SpinGame { get; private set; } = default!;
-    public IUser User { get; private set; } = default!;
+    public UserBase User { get; private set; } = default!;
 
     private SpinPlayer()
     { }

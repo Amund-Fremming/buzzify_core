@@ -16,14 +16,14 @@ public class UserController(IUserService service) : ControllerBase
                 suc => Ok(),
                 err => BadRequest(err.Message));
 
-    [HttpPost]
+    [HttpPost("create/guest")]
     public async Task<IActionResult> CreateGuestUser()
         => (await service.CreateGuestUser())
             .Resolve(
                 suc => Ok(suc.Data),
                 err => BadRequest(err.Message));
 
-    [HttpPost]
+    [HttpPost("create/user")]
     public async Task<IActionResult> CreateGuestUser([FromBody] RegisterUserRequest request)
         => (await service.CreateRegisteredUser(request.Name, request.Email, request.Password))
             .Resolve(

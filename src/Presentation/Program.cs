@@ -8,16 +8,24 @@ using Presentation.Sockets;
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 
-services.AddOpenApi();
 services.AddEndpointsApiExplorer();
 services.AddControllers();
 services.AddSignalR();
 services.AddLogging();
-services.AddResponseCompression(o => o.EnableForHttps = true);
 
 services
     .AddInfrastructure()
     .AddApplication();
+
+services.AddResponseCompression(o =>
+{
+    o.EnableForHttps = true;
+});
+
+services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new() { Title = "B_ API", Version = "v1" });
+});
 
 services.AddHttpClient(nameof(BeerPrice), client =>
 {
@@ -28,21 +36,16 @@ services.AddHttpClient(nameof(BeerPrice), client =>
 services.AddDbContext<AppDbContext>(o =>
 {
     var connectionString = builder.Configuration.GetConnectionString("Database:ConnectionString");
-    if (string.IsNullOrEmpty(connectionString))
-    {
-        o.UseInMemoryDatabase("InMemoryDb");
-    }
-    else
-    {
-        o.UseNpgsql(connectionString);
-    }
+    o.UseNpgsql(connectionString);
 });
 
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
 }
 
 app.MapHubs();

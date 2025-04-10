@@ -1,5 +1,4 @@
 ﻿using Domain.Abstractions;
-using Domain.Entities.Shared;
 using Domain.Shared.Enums;
 using Domain.Shared.ResultPattern;
 
@@ -11,7 +10,7 @@ public sealed class SpinGame : GameBase
     public SpinGameState State { get; private set; }
     public string? HubGroupName { get; private set; }
     public int HostId { get; private set; }
-    public IUser Host { get; private set; } = default!;
+    public UserBase Host { get; private set; } = default!;
 
     private readonly IList<SpinPlayer> _players = [];
     private readonly IList<Challenge> _challenges = [];
@@ -31,17 +30,6 @@ public sealed class SpinGame : GameBase
 
         _challenges.Add(challenge);
         IterationCount++;
-        return Result.Ok;
-    }
-
-    public Result Upvote(Vote vote)
-    {
-        if (vote is null)
-        {
-            return new Error("Vote cannot be null.");
-        }
-
-        _votes.Add(vote);
         return Result.Ok;
     }
 

@@ -12,8 +12,9 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<UserBase> Users { get; set; }
     public DbSet<SpinGame> SpinGames { get; set; }
     public DbSet<SpinPlayer> SpinPlayers { get; set; }
-    public DbSet<Vote> Votes { get; set; }
     public DbSet<AskGame> AskGames { get; set; }
+    public DbSet<Question> Questions { get; set; }
+    public DbSet<Challenge> Challenges { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -31,30 +32,30 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             .HasIndex(p => new { p.UserId, p.GameId })
             .IsUnique();
 
-        modelBuilder.Entity<AskGame>()
+        modelBuilder.Entity<GameBase>()
             .HasKey(g => g.Id);
 
+        modelBuilder.Entity<AskGame>()
+            .HasBaseType<GameBase>();
+
         modelBuilder.Entity<SpinGame>()
-            .HasKey(g => g.Id);
+            .HasBaseType<GameBase>();
 
         modelBuilder.Entity<SpinPlayer>()
             .HasOne(p => p.SpinGame)
             .WithMany(g => g.Players)
             .HasForeignKey(gp => gp.GameId);
 
-        modelBuilder.Entity<Vote>()
-            .HasKey(v => v.Id);
+        modelBuilder.Entity<Question>()
+            .HasKey(q => q.Id);
 
-        modelBuilder.Entity<Vote>()
-            .HasOne(v => v.Game)
-            .WithMany(u => u.Votes)
-            .HasForeignKey(v => v.GameId);
+        modelBuilder.Entity<Challenge>()
+            .HasKey(c => c.Id);
 
-        modelBuilder.Entity<Vote>()
-            .HasIndex(v => new { v.GameType, v.GameId });
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
     }
 
-    public void ApplyChanges<T>(T entity) where T : class => base.Update<T>(entity);
+    public void ApplyChanges<T>(T entity) where T : class => base.Update(entity);
 
     public void Delete<T>(T entity) where T : class => base.Remove(entity);
 
