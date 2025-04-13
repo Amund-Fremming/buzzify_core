@@ -12,7 +12,7 @@ public sealed class AskGame : GameBase
     public int CreatorId { get; set; }
     public Category Category { get; private set; }
     public AskGameState State { get; private set; }
-    public string? Description { get; init; }
+    public string? Description { get; set; }
 
     private readonly List<Question> _questions = [];
     public IReadOnlyList<Question> Questions => _questions.AsReadOnly();

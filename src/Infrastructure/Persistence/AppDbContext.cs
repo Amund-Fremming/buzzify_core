@@ -51,8 +51,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
         modelBuilder.Entity<Challenge>()
             .HasKey(c => c.Id);
-
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
     }
 
     public void ApplyChanges<T>(T entity) where T : class => base.Update(entity);

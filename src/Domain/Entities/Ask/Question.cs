@@ -7,8 +7,8 @@ public class Question
     [Key]
     public int Id { get; }
 
-    public int AskGameId { get; init; }
-    public string Text { get; init; } = default!;
+    public int AskGameId { get; set; }
+    public string Text { get; set; } = default!;
 
     public bool Active { get; set; }
 
