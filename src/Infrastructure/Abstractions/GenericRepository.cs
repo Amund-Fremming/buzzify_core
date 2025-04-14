@@ -20,7 +20,7 @@ public class GenericRepository(IAppDbContext context) : IGenericRepository
                 return new EmptyResult();
             }
 
-            return new Error($"{typeof(T)} with id {id}, does not exist.");
+            return entity;
         }
         catch (Exception ex)
         {

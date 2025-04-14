@@ -12,14 +12,15 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250413142916_InitCreate")]
-    partial class InitCreate
+    [Migration("20250414075330_SchemeMigration")]
+    partial class SchemeMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("buzzify")
                 .HasAnnotation("ProductVersion", "9.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -53,7 +54,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GameBase");
+                    b.ToTable("GameBase", "buzzify");
 
                     b.HasDiscriminator().HasValue("GameBase");
 
@@ -81,7 +82,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", "buzzify");
 
                     b.HasDiscriminator().HasValue("UserBase");
 
@@ -110,7 +111,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("AskGameId");
 
-                    b.ToTable("Questions");
+                    b.ToTable("Questions", "buzzify");
                 });
 
             modelBuilder.Entity("Domain.Entities.Spin.Challenge", b =>
@@ -141,7 +142,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("SpinGameId");
 
-                    b.ToTable("Challenges");
+                    b.ToTable("Challenges", "buzzify");
                 });
 
             modelBuilder.Entity("Domain.Entities.Spin.SpinPlayer", b =>
@@ -165,7 +166,7 @@ namespace Infrastructure.Migrations
                     b.HasIndex("UserId", "GameId")
                         .IsUnique();
 
-                    b.ToTable("SpinPlayers");
+                    b.ToTable("SpinPlayers", "buzzify");
                 });
 
             modelBuilder.Entity("Domain.Entities.Ask.AskGame", b =>
@@ -205,7 +206,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("HostId");
 
-                    b.ToTable("GameBase", t =>
+                    b.ToTable("GameBase", "buzzify", t =>
                         {
                             t.Property("Category")
                                 .HasColumnName("SpinGame_Category");

@@ -9,6 +9,8 @@ namespace Infrastructure.Persistence;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options), IAppDbContext
 {
+    private const string _schema = "buzzify";
+
     public DbSet<UserBase> Users { get; set; }
     public DbSet<SpinGame> SpinGames { get; set; }
     public DbSet<SpinPlayer> SpinPlayers { get; set; }
@@ -18,6 +20,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.HasDefaultSchema(_schema);
+
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.Entity<UserBase>()
