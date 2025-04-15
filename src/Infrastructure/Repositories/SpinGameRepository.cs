@@ -14,7 +14,7 @@ public class SpinGameRepository(IAppDbContext context) : RepositoryBase<SpinGame
     {
         try
         {
-            var game = await _context.SpinGames
+            var game = await _context.SpinGame
                 .Include(x => x.Players)
                 .Include(x => x.Challenges)
                 .FirstOrDefaultAsync();
@@ -36,7 +36,7 @@ public class SpinGameRepository(IAppDbContext context) : RepositoryBase<SpinGame
     {
         try
         {
-            var player = await _context.SpinPlayers.FirstOrDefaultAsync(p => p.UserId == userId && p.GameId == gameId);
+            var player = await _context.SpinPlayer.FirstOrDefaultAsync(p => p.UserId == userId && p.GameId == gameId);
             if (player is null)
             {
                 return new EmptyResult();

@@ -12,7 +12,7 @@ public class UserBaseRepository(IAppDbContext context) : IUserBaseRepository
     {
         try
         {
-            await context.Users.AddAsync(user);
+            await context.User.AddAsync(user);
             return user;
         }
         catch (Exception ex)
@@ -25,7 +25,7 @@ public class UserBaseRepository(IAppDbContext context) : IUserBaseRepository
     {
         try
         {
-            await context.Users.AddAsync(user);
+            await context.User.AddAsync(user);
             return user;
         }
         catch (Exception ex)
@@ -38,7 +38,7 @@ public class UserBaseRepository(IAppDbContext context) : IUserBaseRepository
     {
         try
         {
-            context.Users.Update(user);
+            context.User.Update(user);
             await context.SaveChangesAsync();
             return user;
         }
@@ -52,7 +52,7 @@ public class UserBaseRepository(IAppDbContext context) : IUserBaseRepository
     {
         try
         {
-            return context.Users.Where(u => u.LastActive < dateTime)
+            return context.User.Where(u => u.LastActive < dateTime)
                 .ToList();
         }
         catch (Exception ex)
@@ -65,7 +65,7 @@ public class UserBaseRepository(IAppDbContext context) : IUserBaseRepository
     {
         try
         {
-            var result = await context.Users.ToListAsync();
+            var result = await context.User.ToListAsync();
             if (result is null)
             {
                 return new List<UserBase>();

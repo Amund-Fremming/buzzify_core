@@ -14,7 +14,7 @@ public class AskGameRepository(IAppDbContext context) : RepositoryBase<AskGame>(
     {
         try
         {
-            var game = await _context.AskGames
+            var game = await _context.AskGame
                 .Include(x => x.Questions)
                 .FirstOrDefaultAsync(g => g.Id == id);
 

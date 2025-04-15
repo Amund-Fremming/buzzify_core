@@ -9,14 +9,14 @@ namespace Infrastructure.Persistence;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options), IAppDbContext
 {
-    private const string _schema = "buzzify";
+    private const string _schema = "Buzzify";
 
-    public DbSet<UserBase> Users { get; set; }
-    public DbSet<SpinGame> SpinGames { get; set; }
-    public DbSet<SpinPlayer> SpinPlayers { get; set; }
-    public DbSet<AskGame> AskGames { get; set; }
-    public DbSet<Question> Questions { get; set; }
-    public DbSet<Challenge> Challenges { get; set; }
+    public DbSet<UserBase> User { get; set; }
+    public DbSet<SpinGame> SpinGame { get; set; }
+    public DbSet<SpinPlayer> SpinPlayer { get; set; }
+    public DbSet<AskGame> AskGame { get; set; }
+    public DbSet<Question> Question { get; set; }
+    public DbSet<Challenge> Challenge { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -36,14 +36,17 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             .HasIndex(p => new { p.UserId, p.GameId })
             .IsUnique();
 
-        modelBuilder.Entity<GameBase>()
+        modelBuilder.Entity<AskGame>()
             .HasKey(g => g.Id);
 
         modelBuilder.Entity<AskGame>()
-            .HasBaseType<GameBase>();
+            .ToTable(nameof(AskGame));
 
         modelBuilder.Entity<SpinGame>()
-            .HasBaseType<GameBase>();
+            .HasKey(g => g.Id);
+
+        modelBuilder.Entity<SpinGame>()
+            .ToTable(nameof(SpinGame));
 
         modelBuilder.Entity<SpinPlayer>()
             .HasOne(p => p.SpinGame)

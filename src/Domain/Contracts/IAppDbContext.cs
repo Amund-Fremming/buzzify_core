@@ -7,12 +7,12 @@ namespace Domain.Contracts;
 
 public interface IAppDbContext
 {
-    DbSet<UserBase> Users { get; set; }
-    DbSet<SpinGame> SpinGames { get; }
-    DbSet<SpinPlayer> SpinPlayers { get; }
-    DbSet<AskGame> AskGames { get; }
-    DbSet<Question> Questions { get; }
-    DbSet<Challenge> Challenges { get; }
+    DbSet<UserBase> User { get; set; }
+    DbSet<SpinGame> SpinGame { get; }
+    DbSet<SpinPlayer> SpinPlayer { get; }
+    DbSet<AskGame> AskGame { get; }
+    DbSet<Question> Question { get; }
+    DbSet<Challenge> Challenge { get; }
 
     DbSet<T> Entity<T>() where T : class;
 
