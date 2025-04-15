@@ -3,7 +3,6 @@ using Application.Services;
 using Domain.Abstractions;
 using Domain.Contracts;
 using Infrastructure.Abstractions;
-using Infrastructure.External;
 using Infrastructure.Persistence;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -20,7 +19,6 @@ public static class DependencyInjection
         services.AddScoped<IAskGameRepository, AskGameRepository>();
         services.AddScoped<ISpinGameRepository, SpinGameRepository>();
         services.AddScoped<IGenericRepository, GenericRepository>();
-        services.AddScoped<IBeerPriceClient, BeerPriceClient>();
         services.AddScoped<IAdminService, AdminService>();
         services.AddScoped<IUserBaseRepository, UserBaseRepository>();
 
