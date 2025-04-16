@@ -54,13 +54,13 @@ public sealed class AskGame : GameBase
         }
     }
 
-    public static AskGame Create(int userId, string name, string? description = null!, Category? category = Category.Random)
+    public static AskGame Create(int userId, string name, string universalId, string description = "", Category category = Category.Random)
         => new()
         {
             CreatorId = userId,
-            Category = category ?? Category.Random,
+            Category = category,
             State = AskGameState.Initialized,
-            UniversalId = $"{nameof(AskGame)}:{Guid.NewGuid()}",
+            UniversalId = universalId,
             Name = name,
             IterationCount = 0,
             CurrentIteration = 0,

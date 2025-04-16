@@ -28,14 +28,45 @@ public sealed class SpinGame : GameBase
             return new Error("Challenge cannot be null.");
         }
 
+        if (State != SpinGameState.Initialized)
+        {
+            return new Error("Cannot add challenges in a started game.");
+        }
+
         _challenges.Add(challenge);
         IterationCount++;
         return Result.Ok;
     }
 
-    // StartSpin
-    // StartGame
-    // NextRound
+    public Result<Challenge> StartSpin()
+    {
+        if (CurrentIteration > IterationCount || State == SpinGameState.Finished)
+        {
+            State = SpinGameState.Finished;
+            return new Error("The game is finished.");
+        }
+
+        State = SpinGameState.Spinning;
+        CurrentIteration++;
+    }
+
+    private Result<string> StartRound()
+    {
+        if (CurrentIteration > IterationCount || State == SpinGameState.Finished)
+        {
+            State = SpinGameState.Finished;
+            return new Error("The game is finished.");
+        }
+
+        State = SpinGameState.RoundStarted;
+        var challenge = _challenges[CurrentIteration - 1];
+        if (!challenge.ReadBeforeSpin)
+        {
+            return "Neste challenge kommer da noen blir valgt, vær klare!";
+        }
+
+        return challenge.Text;
+    }
 
     public SpinGame AsCopy()
     {
@@ -43,15 +74,15 @@ public sealed class SpinGame : GameBase
         return this;
     }
 
-    public static SpinGame Create(string name, int hostId, Category? category = Category.Random, int? iterationCount = 0, int? currentIteration = 0)
+    public static SpinGame Create(string name, int hostId, Category? category = Category.Random)
         => new()
         {
             Category = category ?? Category.Random,
             State = SpinGameState.Initialized,
             UniversalId = $"{nameof(SpinGame)}:{Guid.NewGuid()}",
             Name = name,
-            IterationCount = iterationCount ?? 0,
-            CurrentIteration = currentIteration ?? 0,
+            IterationCount = 0,
+            CurrentIteration = 0,
             HostId = hostId,
         };
 }
