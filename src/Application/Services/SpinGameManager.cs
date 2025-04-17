@@ -9,8 +9,6 @@ namespace Application.Services;
 
 public class SpinGameManager(ISpinGameRepository spinGameRepository, IGenericRepository genericRepository) : ISpinGameManager
 {
-    public Task<Result> AddChallenge() => throw new NotImplementedException();
-
     public async Task<Result<int>> CreateGame(int userId, string name, Category? category = null)
     {
         var game = SpinGame.Create(name, userId, category);
@@ -50,16 +48,12 @@ public class SpinGameManager(ISpinGameRepository spinGameRepository, IGenericRep
         {
             result.Data.SetActive(true);
             var updateResult = await genericRepository.Update(result.Data);
-            return updateResult.Resolve(
-                suc => suc,
-                err => err.Error);
+            return updateResult;
         }
 
         var player = SpinPlayer.Create(userId, gameId);
         var createResult = await genericRepository.Create(player);
-        return createResult.Resolve(
-            suc => suc,
-            err => err.Error);
+        return createResult;
     }
 
     public Task<Result<SpinGame>> StartExistingGame(int userId, int gameId) => throw new NotImplementedException();
@@ -71,4 +65,6 @@ public class SpinGameManager(ISpinGameRepository spinGameRepository, IGenericRep
     public Task<Challenge> StartSpin(int userId, int gameId) => throw new NotImplementedException();
 
     public Task<Result<SpinPlayer>> UpdateHost(int userId, int gameId) => throw new NotImplementedException();
+
+    public Task<Result> AddChallenge(int participants, string text, bool readBeforeSpin = false) => throw new NotImplementedException();
 }

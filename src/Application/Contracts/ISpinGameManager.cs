@@ -19,7 +19,7 @@ public interface ISpinGameManager
     // TODO
     Task<Result<SpinPlayer>> UpdateHost(int userId, int gameId);
 
-    Task<Result> AddChallenge(int userId, int gameId);
+    Task<Result> AddChallenge(int gameId, int participants, string text, bool readBeforeSpin = false);
 
     Task<string> StartRound(int userId, int gameId);
 
