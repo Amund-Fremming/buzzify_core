@@ -9,6 +9,6 @@ public abstract class GameBase
 
     public string? UniversalId { get; set; }
     public string Name { get; set; } = default!;
-    public int IterationCount { get; set; }
+    public int Iterations { get; set; }
     public int CurrentIteration { get; set; }
 }

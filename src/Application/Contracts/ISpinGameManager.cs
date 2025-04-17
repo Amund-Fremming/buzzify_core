@@ -15,4 +15,13 @@ public interface ISpinGameManager
     Task<Result<SpinGame>> StartGame(int userId, int gameId);
 
     Task<Result<SpinGame>> StartExistingGame(int userId, int gameId);
+
+    // TODO
+    Task<Result<SpinPlayer>> UpdateHost(int userId, int gameId);
+
+    Task<Result> AddChallenge(int userId, int gameId);
+
+    Task<string> StartRound(int userId, int gameId);
+
+    Task<Challenge> StartSpin(int userId, int gameId);
 }

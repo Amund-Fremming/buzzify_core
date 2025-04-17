@@ -21,6 +21,25 @@ public sealed class SpinGame : GameBase
     private SpinGame()
     { }
 
+    public Result<SpinPlayer> UpdateHost()
+    {
+        var prevHost = _players.FirstOrDefault(p => p.Id == HostId);
+        if (prevHost is null)
+        {
+            return new Error("The is provided is not in this game.");
+        }
+
+        prevHost.SetActive(false);
+        var nextHost = _players[0];
+        if (nextHost is null)
+        {
+            return new Error("The game does not have any players left.");
+        }
+
+        HostId = nextHost.Id;
+        return nextHost;
+    }
+
     public Result AddChallenge(Challenge challenge)
     {
         if (challenge is null)
@@ -34,13 +53,13 @@ public sealed class SpinGame : GameBase
         }
 
         _challenges.Add(challenge);
-        IterationCount++;
+        Iterations++;
         return Result.Ok;
     }
 
     public Result<Challenge> StartSpin()
     {
-        if (CurrentIteration > IterationCount || State == SpinGameState.Finished)
+        if (CurrentIteration > Iterations || State == SpinGameState.Finished)
         {
             State = SpinGameState.Finished;
             return new Error("The game is finished.");
@@ -48,11 +67,18 @@ public sealed class SpinGame : GameBase
 
         State = SpinGameState.Spinning;
         CurrentIteration++;
+        var challenge = _challenges[CurrentIteration - 1];
+        if (!challenge.ReadBeforeSpin)
+        {
+            return challenge;
+        }
+
+        return challenge.EmptyText();
     }
 
     private Result<string> StartRound()
     {
-        if (CurrentIteration > IterationCount || State == SpinGameState.Finished)
+        if (CurrentIteration > Iterations || State == SpinGameState.Finished)
         {
             State = SpinGameState.Finished;
             return new Error("The game is finished.");
@@ -68,6 +94,8 @@ public sealed class SpinGame : GameBase
         return challenge.Text;
     }
 
+    public bool GameFinished() => State == SpinGameState.Finished || CurrentIteration == Iterations - 1;
+
     public SpinGame AsCopy()
     {
         State = SpinGameState.ChallengesClosed;
@@ -81,7 +109,7 @@ public sealed class SpinGame : GameBase
             State = SpinGameState.Initialized,
             UniversalId = $"{nameof(SpinGame)}:{Guid.NewGuid()}",
             Name = name,
-            IterationCount = 0,
+            Iterations = 0,
             CurrentIteration = 0,
             HostId = hostId,
         };

@@ -6,9 +6,7 @@
 - BackgroundService for å hente ut data, lagre i db
 - Logger service med enum tags for error level
 
-- Bytt ut vote, med mest spilte
 - Få inn warnings as errors og ubrukte variabler som feil
-- DDD methods on SpinGame
 
 ## Frontend
 - Modal som vises om versjon er utdatert

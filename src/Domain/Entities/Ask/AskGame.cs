@@ -28,7 +28,7 @@ public sealed class AskGame : GameBase
         }
 
         _questions.Add(question);
-        IterationCount++;
+        Iterations++;
         return _questions.Count;
     }
 
@@ -62,7 +62,7 @@ public sealed class AskGame : GameBase
             State = AskGameState.Initialized,
             UniversalId = universalId,
             Name = name,
-            IterationCount = 0,
+            Iterations = 0,
             CurrentIteration = 0,
             Description = description,
         };
