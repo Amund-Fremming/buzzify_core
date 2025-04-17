@@ -2,6 +2,7 @@
 using Domain.Abstractions;
 using Domain.Contracts;
 using Domain.Entities.Spin;
+using Domain.Extentions;
 using Domain.Shared.Enums;
 using Domain.Shared.ResultPattern;
 
@@ -21,7 +22,8 @@ public class SpinGameManager(ISpinGameRepository spinGameRepository, IGenericRep
         return result.Data.Id;
     }
 
-    public async Task<Result> InactivatePlayer(int userId, int gameId)
+    // MÅ oppdatere game og spingame her, denne metoden kan bli veldig treig
+    public async Task<Result<SpinPlayer>> InactivatePlayer(int userId, int gameId)
     {
         var result = await spinGameRepository.GetPlayer(userId, gameId);
         if (result.IsError)
@@ -29,11 +31,26 @@ public class SpinGameManager(ISpinGameRepository spinGameRepository, IGenericRep
             return result.Error;
         }
 
-        var player = result.Data;
-        player.SetActive(true);
+        result.Data.SetActive(false);
+        var saveResult = await genericRepository.Update(result.Data);
+        if (saveResult.IsError)
+        {
+            return saveResult.Error;
+        }
 
-        var saveResult = await genericRepository.Update(player);
-        return saveResult;
+        var gameResult = await spinGameRepository.GetGameWithPlayers(gameId);
+        if (gameResult.IsError)
+        {
+            return gameResult.Error;
+        }
+
+        if (gameResult.Data.HostId != userId)
+        {
+            return new EmptyResult();
+        }
+
+        var newHostResult = gameResult.Data.UpdateHost();
+        return newHostResult;
     }
 
     public async Task<Result> JoinGame(int userId, int gameId)
@@ -56,15 +73,92 @@ public class SpinGameManager(ISpinGameRepository spinGameRepository, IGenericRep
         return createResult;
     }
 
-    public Task<Result<SpinGame>> StartExistingGame(int userId, int gameId) => throw new NotImplementedException();
+    public async Task<Result<SpinGame>> CreateExistingGame(int userId, int gameId)
+    {
+        var result = await spinGameRepository.GetById(gameId);
+        if (result.IsError)
+        {
+            return result.Error;
+        }
 
-    public Task<Result<SpinGame>> StartGame(int userId, int gameId) => throw new NotImplementedException();
+        var game = result.Data.PartialCopy(userId);
+        var saveResult = await spinGameRepository.Create(game);
+        return saveResult;
+    }
 
-    public Task<string> StartRound(int userId, int gameId) => throw new NotImplementedException();
+    public async Task<Result<string>> StartRound(int userId, int gameId)
+    {
+        var gameResult = await spinGameRepository.GetById(gameId);
+        if (gameResult.IsError)
+        {
+            return gameResult.Error;
+        }
 
-    public Task<Challenge> StartSpin(int userId, int gameId) => throw new NotImplementedException();
+        var startResult = gameResult.Data.StartRound();
+        if (startResult.IsError)
+        {
+            return startResult.Error;
+        }
 
-    public Task<Result<SpinPlayer>> UpdateHost(int userId, int gameId) => throw new NotImplementedException();
+        var updateResult = await spinGameRepository.Update(gameResult.Data);
+        if (updateResult.IsError)
+        {
+            return updateResult.Error;
+        }
 
-    public Task<Result> AddChallenge(int participants, string text, bool readBeforeSpin = false) => throw new NotImplementedException();
+        return startResult.Data;
+    }
+
+    public async Task<Result<Challenge>> StartSpin(int userId, int gameId)
+    {
+        var gameResult = await spinGameRepository.GetById(userId);
+        if (gameResult.IsError)
+        {
+            return gameResult.Error;
+        }
+
+        var startResult = gameResult.Data.StartSpin();
+        if (startResult.IsError)
+        {
+            return startResult.Error;
+        }
+
+        var updateResult = await spinGameRepository.Update(gameResult.Data);
+        if (updateResult.IsError)
+        {
+            return updateResult.Error;
+        }
+
+        return startResult.Data;
+    }
+
+    public async Task<Result<int>> AddChallenge(int gameId, int participants, string text, bool readBeforeSpin = false)
+    {
+        var gameResult = await spinGameRepository.GetById(gameId);
+        if (gameResult.IsError)
+        {
+            return gameResult.Error;
+        }
+
+        var challenge = Challenge.Create(gameId, participants, text, readBeforeSpin);
+        var addResult = gameResult.Data.AddChallenge(challenge);
+        if (addResult.IsError)
+        {
+            return addResult.Error;
+        }
+
+        var createResult = await genericRepository.Create(challenge);
+        if (createResult.IsError)
+        {
+            return createResult.Error;
+        }
+
+        var updateResult = await spinGameRepository.Update(gameResult.Data);
+        if (updateResult.IsError)
+        {
+            return updateResult.Error;
+        }
+
+        return addResult;
+    }
 }

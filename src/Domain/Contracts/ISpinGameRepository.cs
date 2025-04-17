@@ -8,5 +8,7 @@ public interface ISpinGameRepository : IRepository<SpinGame>
 {
     Task<Result<SpinGame>> GetGameWithPlayersAndChallenges(int id);
 
+    Task<Result<SpinGame>> GetGameWithPlayers(int id);
+
     Task<Result<SpinPlayer>> GetPlayer(int userId, int gameId);
 }

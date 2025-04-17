@@ -40,7 +40,7 @@ public sealed class SpinGame : GameBase
         return nextHost;
     }
 
-    public Result AddChallenge(Challenge challenge)
+    public Result<int> AddChallenge(Challenge challenge)
     {
         if (challenge is null)
         {
@@ -54,7 +54,7 @@ public sealed class SpinGame : GameBase
 
         _challenges.Add(challenge);
         Iterations++;
-        return Result.Ok;
+        return Iterations;
     }
 
     public Result<Challenge> StartSpin()
@@ -76,7 +76,7 @@ public sealed class SpinGame : GameBase
         return challenge.EmptyText();
     }
 
-    private Result<string> StartRound()
+    public Result<string> StartRound()
     {
         if (CurrentIteration > Iterations || State == SpinGameState.Finished)
         {

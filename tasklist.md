@@ -2,6 +2,10 @@
 
 ## Backend
 
+Amund
+- _players kan ha spillere som er inactive som må tenkes på når man spinner, eller endre
+
+Dennis
 - BeerPrices lagres i DB (Se model i Domain)
 - BackgroundService for å hente ut data, lagre i db
 - Logger service med enum tags for error level

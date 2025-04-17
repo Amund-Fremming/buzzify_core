@@ -29,7 +29,7 @@ public sealed class AskGame : GameBase
 
         _questions.Add(question);
         Iterations++;
-        return _questions.Count;
+        return Iterations;
     }
 
     public Result<AskGame> StartGame()
@@ -54,13 +54,13 @@ public sealed class AskGame : GameBase
         }
     }
 
-    public static AskGame Create(int userId, string name, string universalId, string description = "", Category category = Category.Random)
+    public static AskGame Create(int userId, string name, string description = "", Category category = Category.Random)
         => new()
         {
             CreatorId = userId,
             Category = category,
             State = AskGameState.Initialized,
-            UniversalId = universalId,
+            UniversalId = $"{nameof(AskGame)}:{Guid.NewGuid}",
             Name = name,
             Iterations = 0,
             CurrentIteration = 0,

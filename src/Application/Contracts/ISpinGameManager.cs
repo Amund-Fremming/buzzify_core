@@ -8,20 +8,15 @@ public interface ISpinGameManager
 {
     Task<Result> JoinGame(int userId, int gameId);
 
-    Task<Result> InactivatePlayer(int userId, int gameId);
+    Task<Result<SpinPlayer>> InactivatePlayer(int userId, int gameId);
 
     Task<Result<int>> CreateGame(int userId, string name, Category? category = null);
 
-    Task<Result<SpinGame>> StartGame(int userId, int gameId);
+    Task<Result<SpinGame>> CreateExistingGame(int userId, int gameId);
 
-    Task<Result<SpinGame>> StartExistingGame(int userId, int gameId);
+    Task<Result<int>> AddChallenge(int gameId, int participants, string text, bool readBeforeSpin = false);
 
-    // TODO
-    Task<Result<SpinPlayer>> UpdateHost(int userId, int gameId);
+    Task<Result<string>> StartRound(int userId, int gameId);
 
-    Task<Result> AddChallenge(int gameId, int participants, string text, bool readBeforeSpin = false);
-
-    Task<string> StartRound(int userId, int gameId);
-
-    Task<Challenge> StartSpin(int userId, int gameId);
+    Task<Result<Challenge>> StartSpin(int userId, int gameId);
 }

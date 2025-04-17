@@ -11,13 +11,6 @@ namespace Presentation.Endpoints;
 [Route("api/v1/[controller]")]
 public class AskGameController(IAskGameManager manager, IGenericRepository genericRepository) : ReadControllerBase<AskGame>(genericRepository)
 {
-    [HttpPost("{gameId:int}")]
-    public async Task<IActionResult> AddQuestion(int gameId, [FromQuery] string question)
-        => (await manager.AddQuestion(gameId, question))
-            .Resolve(
-                suc => Ok(),
-                err => BadRequest(err.Message));
-
     [HttpGet("{id:int}")]
     public async Task<IActionResult> StartGame(int id)
         => (await manager.StartGame(id))

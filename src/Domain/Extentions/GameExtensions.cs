@@ -8,8 +8,6 @@ public static class GameExtensions
         => SpinGame.Create(
             category: spinGame.Category,
             name: spinGame.Name,
-            iterationCount: spinGame.Iterations,
-            currentIteration: spinGame.CurrentIteration,
             hostId: hostId
         ).AsCopy();
 }

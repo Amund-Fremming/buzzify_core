@@ -6,9 +6,9 @@ namespace Application.Contracts;
 
 public interface IAskGameManager
 {
-    Task<Result<int>> CreateGame(int userId, string name, string? description = null, Category? category = null);
+    Task<Result<int>> CreateGame(int userId, string name, string description = "", Category category = Category.Random);
 
-    Task<Result> AddQuestion(int gameId, string question);
+    Task<Result<int>> AddQuestion(int gameId, string question);
 
     Task<Result<AskGame>> StartGame(int gameId);
 }
