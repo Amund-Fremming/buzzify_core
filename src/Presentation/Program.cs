@@ -40,8 +40,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapHubs();
-app.MapHub<AskGameHub>("/ask");
-app.MapHub<SpinGameHub>("/spin");
 app.MapControllers();
 app.UseHttpsRedirection();
 

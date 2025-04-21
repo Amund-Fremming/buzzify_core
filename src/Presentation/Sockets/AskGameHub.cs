@@ -16,7 +16,7 @@ public class AskGameHub(IAskGameManager manager) : Hub
 
         var remove = Groups.RemoveFromGroupAsync(Context.ConnectionId, gameId.ToString());
         var confirm = Clients.Caller.SendAsync(HubChannels.Message, "Du har forlatt spillet.");
-        var alert = Clients.Group(gameId.ToString()).SendAsync(HubChannels.PlayerLeft, "En bruker forlot spillet.");
+        var alert = Clients.GroupExcept(gameId.ToString(), Context.ConnectionId).SendAsync(HubChannels.PlayersLeft, "En bruker forlot spillet.");
 
         await Task.WhenAll(remove, confirm, alert);
     }
@@ -46,6 +46,14 @@ public class AskGameHub(IAskGameManager manager) : Hub
     }
 
     public async Task StartGame(int gameId)
-        => await Clients.Group(gameId.ToString())
-            .SendAsync(HubChannels.State, "Legg vekk telefonen, spillmesteren har startet spillet.");
+    {
+        var result = await manager.StartGame(gameId);
+        if (result.IsError)
+        {
+            await Clients.Caller.SendAsync(HubChannels.Error, "En feil skjedde ved oppstart av spillet.");
+            return;
+        }
+
+        await Clients.Group(gameId.ToString()).SendAsync(HubChannels.State, result.Data.State);
+    }
 }

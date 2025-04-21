@@ -16,7 +16,6 @@ Dennis
 - Modal som vises om versjon er utdatert
 - varslinger
 - Firebase Analysis
-- Service
 - Connection provider
 		- Must also display error on wifi disconnect
 		- Must have a api call to remove the player from the game (set to inactive)
