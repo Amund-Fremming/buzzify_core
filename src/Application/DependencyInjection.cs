@@ -15,6 +15,7 @@ public static class DependencyInjection
         services.AddScoped<IAdminService, AdminService>();
         services.AddMemoryCache();
         services.AddSingleton<IMemoryCache, MemoryCache>();
+        services.AddScoped<IUniversalGameService, UniversalGameService>();
 
         return services;
     }

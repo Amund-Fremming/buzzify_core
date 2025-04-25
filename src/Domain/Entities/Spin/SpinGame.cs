@@ -21,6 +21,17 @@ public sealed class SpinGame : GameBase
     private SpinGame()
     { }
 
+    public Result AddPlayer(SpinPlayer player)
+    {
+        if (_players.Contains(player))
+        {
+            return new Error("Spilleren er allerede med i spillet");
+        }
+
+        _players.Add(player);
+        return Result.Ok;
+    }
+
     public Result<SpinPlayer> UpdateHost()
     {
         var prevHost = _players.FirstOrDefault(p => p.Id == HostId);

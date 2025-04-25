@@ -7,6 +7,7 @@ using Presentation.Abstractions;
 
 namespace Presentation.Endpoints;
 
+[ApiController]
 [Route("api/v1/[controller]")]
 public class SpinGameController(ISpinGameManager manager, IGenericRepository genericRepository) : ReadControllerBase<SpinGame>(genericRepository)
 {
