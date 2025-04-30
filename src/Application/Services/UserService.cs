@@ -51,7 +51,7 @@ internal class UserService(IGenericRepository genericRepository) : IUserService
         return updateResult;
     }
 
-    public async Task<Result<bool>> DoesPlayerExist(int userId)
+    public async Task<Result<bool>> DoesUserExist(int userId)
     {
         var result = await genericRepository.GetById<UserBase>(userId);
         if (result.IsError)

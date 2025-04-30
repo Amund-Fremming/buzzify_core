@@ -73,9 +73,16 @@ public class AdminService(IGenericRepository genericRepository, IUserBaseReposit
         };
     }
 
-    public Task<Result<UserActivityData>> GetHistoricUserActivity(int passCode)
+    public async Task<Result<UserActivityData>> GetHistoricUserActivity(int passCode)
     {
-        // TODO
+        if (passCode != _validPassCode)
+        {
+            return new Error("Unauthorized.");
+        }
+
+        // TODO: Get statistics for all time, with presentage up or down from last week/month
+
+        await Task.Run(() => throw new NotImplementedException());
         throw new NotImplementedException();
     }
 }

@@ -22,7 +22,6 @@ public class SpinGameManager(ISpinGameRepository spinGameRepository, IGenericRep
         return result.Data.Id;
     }
 
-    // MÅ oppdatere game og spingame her, denne metoden kan bli veldig treig
     public async Task<Result<SpinPlayer>> InactivatePlayer(int userId, int gameId)
     {
         var result = await spinGameRepository.GetPlayer(userId, gameId);

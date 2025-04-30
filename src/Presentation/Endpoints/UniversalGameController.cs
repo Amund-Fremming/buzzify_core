@@ -1,4 +1,5 @@
 ﻿using Application.Contracts;
+using Domain.Shared.ResultPattern;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Endpoints;
@@ -8,8 +9,8 @@ namespace Presentation.Endpoints;
 public class UniversalGameController(IUniversalGameService service) : ControllerBase
 {
     [HttpPost]
-    public async Task<IActionResult> AddPlayerToGame(int universalGameId, int userId)
-        => (await service.AddPlayerToGame(universalGameId, userId))
+    public async Task<IActionResult> AddPlayerToGame(int userId, int universalGameId)
+        => (await service.AddPlayerToGame(userId, universalGameId))
             .Resolve(
                 suc => Ok(suc.Data),
                 err => BadRequest(err.Message));

@@ -23,7 +23,7 @@ public class UserController(IUserService service) : ControllerBase
                 suc => Ok(suc.Data),
                 err => BadRequest(err.Message));
 
-    [HttpPost("create/user")]
+    [HttpPost("create/registered")]
     public async Task<IActionResult> CreateGuestUser([FromBody] RegisterUserRequest request)
         => (await service.CreateRegisteredUser(request.Name, request.Email, request.Password))
             .Resolve(
@@ -31,8 +31,8 @@ public class UserController(IUserService service) : ControllerBase
                 err => BadRequest(err.Message));
 
     [HttpGet("{userId:int}")]
-    public async Task<IActionResult> DoesPlayerExist(int userId)
-        => (await service.DoesPlayerExist(userId))
+    public async Task<IActionResult> DoesUserExist(int userId)
+        => (await service.DoesUserExist(userId))
             .Resolve(
                 suc => Ok(suc.Data),
                 err => BadRequest(err.Message));

@@ -11,5 +11,5 @@ public interface IUserService
 
     Task<Result<UserBase>> CreateRegisteredUser(string name, string email, string password);
 
-    Task<Result<bool>> DoesPlayerExist(int userId);
+    Task<Result<bool>> DoesUserExist(int userId);
 }

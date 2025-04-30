@@ -68,6 +68,12 @@ public sealed class SpinGame : GameBase
         return Iterations;
     }
 
+    public Result<IEnumerable<SpinPlayer>> GetChosenPlayers()
+    {
+        // INFO: Mulig denne ikke oppdaterer selve spin players?
+        throw new NotImplementedException();
+    }
+
     public Result<Challenge> StartSpin()
     {
         if (CurrentIteration > Iterations || State == SpinGameState.Finished)
@@ -114,14 +120,18 @@ public sealed class SpinGame : GameBase
     }
 
     public static SpinGame Create(string name, int hostId, Category? category = Category.Random)
-        => new()
+    {
+        var game = new SpinGame()
         {
             Category = category ?? Category.Random,
             State = SpinGameState.Initialized,
-            UniversalId = $"{nameof(SpinGame)}:{Guid.NewGuid()}",
             Name = name,
             Iterations = 0,
             CurrentIteration = 0,
             HostId = hostId,
         };
+
+        game.UniversalId = int.Parse("2" + game.Id);
+        return game;
+    }
 }

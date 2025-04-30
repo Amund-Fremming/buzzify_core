@@ -10,6 +10,7 @@ public class SpinPlayer
 
     public int GameId { get; init; }
     public int UserId { get; init; }
+    public int TimesChosen { get; set; } = 0;
     public bool Active { get; private set; }
 
     public SpinGame SpinGame { get; private set; } = default!;
@@ -18,13 +19,15 @@ public class SpinPlayer
     private SpinPlayer()
     { }
 
+    public void Chosen() => TimesChosen++;
+
     public void SetActive(bool active) => Active = active;
 
-    public static SpinPlayer Create(int gameId, int playerId)
+    public static SpinPlayer Create(int gameId, int userId)
         => new()
         {
             GameId = gameId,
-            UserId = playerId,
+            UserId = userId,
             Active = true,
         };
 }
