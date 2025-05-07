@@ -11,5 +11,5 @@ public abstract class UserBase : IUser
 
     public DateTime LastActive { get; set; }
 
-    public void UpdateActivity() => LastActive = DateTime.Now;
+    public void UpdateActivity() => LastActive = DateTime.UtcNow;
 }

@@ -7,5 +7,5 @@ public sealed class GuestUser : UserBase
     private GuestUser()
     { }
 
-    public static GuestUser Create() => new() { Guid = Guid.NewGuid(), LastActive = DateTime.Now };
+    public static GuestUser Create() => new() { Guid = Guid.NewGuid(), LastActive = DateTime.UtcNow };
 }

@@ -37,6 +37,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
     app.UseDeveloperExceptionPage();
+    app.UseCors(policy =>
+        policy.WithOrigins("http://localhost:8081", "https://localhost:8081")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials());
 }
 
 app.MapHubs();

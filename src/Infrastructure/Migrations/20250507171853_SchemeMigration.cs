@@ -13,11 +13,11 @@ namespace Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
-                name: "Buzzify");
+                name: "Beer");
 
             migrationBuilder.CreateTable(
                 name: "AskGame",
-                schema: "Buzzify",
+                schema: "Beer",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -26,9 +26,9 @@ namespace Infrastructure.Migrations
                     Category = table.Column<int>(type: "integer", nullable: false),
                     State = table.Column<int>(type: "integer", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: true),
-                    UniversalId = table.Column<string>(type: "text", nullable: true),
+                    UniversalId = table.Column<int>(type: "integer", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    IterationCount = table.Column<int>(type: "integer", nullable: false),
+                    Iterations = table.Column<int>(type: "integer", nullable: false),
                     CurrentIteration = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -38,7 +38,7 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "User",
-                schema: "Buzzify",
+                schema: "Beer",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -57,7 +57,7 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Question",
-                schema: "Buzzify",
+                schema: "Beer",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -72,7 +72,7 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_Question_AskGame_AskGameId",
                         column: x => x.AskGameId,
-                        principalSchema: "Buzzify",
+                        principalSchema: "Beer",
                         principalTable: "AskGame",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -80,7 +80,7 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "SpinGame",
-                schema: "Buzzify",
+                schema: "Beer",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -89,9 +89,9 @@ namespace Infrastructure.Migrations
                     State = table.Column<int>(type: "integer", nullable: false),
                     HubGroupName = table.Column<string>(type: "text", nullable: true),
                     HostId = table.Column<int>(type: "integer", nullable: false),
-                    UniversalId = table.Column<string>(type: "text", nullable: true),
+                    UniversalId = table.Column<int>(type: "integer", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    IterationCount = table.Column<int>(type: "integer", nullable: false),
+                    Iterations = table.Column<int>(type: "integer", nullable: false),
                     CurrentIteration = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -100,7 +100,7 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_SpinGame_User_HostId",
                         column: x => x.HostId,
-                        principalSchema: "Buzzify",
+                        principalSchema: "Beer",
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -108,13 +108,13 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Challenge",
-                schema: "Buzzify",
+                schema: "Beer",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    RoundId = table.Column<int>(type: "integer", nullable: false),
-                    ParticipantsCount = table.Column<int>(type: "integer", nullable: false),
+                    GameId = table.Column<int>(type: "integer", nullable: false),
+                    Participants = table.Column<int>(type: "integer", nullable: false),
                     Text = table.Column<string>(type: "text", nullable: false),
                     ReadBeforeSpin = table.Column<bool>(type: "boolean", nullable: false),
                     SpinGameId = table.Column<int>(type: "integer", nullable: true)
@@ -125,20 +125,22 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_Challenge_SpinGame_SpinGameId",
                         column: x => x.SpinGameId,
-                        principalSchema: "Buzzify",
+                        principalSchema: "Beer",
                         principalTable: "SpinGame",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "SpinPlayer",
-                schema: "Buzzify",
+                schema: "Beer",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     GameId = table.Column<int>(type: "integer", nullable: false),
-                    UserId = table.Column<int>(type: "integer", nullable: false)
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    TimesChosen = table.Column<int>(type: "integer", nullable: false),
+                    Active = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -146,14 +148,14 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_SpinPlayer_SpinGame_GameId",
                         column: x => x.GameId,
-                        principalSchema: "Buzzify",
+                        principalSchema: "Beer",
                         principalTable: "SpinGame",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_SpinPlayer_User_UserId",
                         column: x => x.UserId,
-                        principalSchema: "Buzzify",
+                        principalSchema: "Beer",
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -161,31 +163,31 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Challenge_SpinGameId",
-                schema: "Buzzify",
+                schema: "Beer",
                 table: "Challenge",
                 column: "SpinGameId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Question_AskGameId",
-                schema: "Buzzify",
+                schema: "Beer",
                 table: "Question",
                 column: "AskGameId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SpinGame_HostId",
-                schema: "Buzzify",
+                schema: "Beer",
                 table: "SpinGame",
                 column: "HostId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SpinPlayer_GameId",
-                schema: "Buzzify",
+                schema: "Beer",
                 table: "SpinPlayer",
                 column: "GameId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SpinPlayer_UserId_GameId",
-                schema: "Buzzify",
+                schema: "Beer",
                 table: "SpinPlayer",
                 columns: new[] { "UserId", "GameId" },
                 unique: true);
@@ -196,27 +198,27 @@ namespace Infrastructure.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Challenge",
-                schema: "Buzzify");
+                schema: "Beer");
 
             migrationBuilder.DropTable(
                 name: "Question",
-                schema: "Buzzify");
+                schema: "Beer");
 
             migrationBuilder.DropTable(
                 name: "SpinPlayer",
-                schema: "Buzzify");
+                schema: "Beer");
 
             migrationBuilder.DropTable(
                 name: "AskGame",
-                schema: "Buzzify");
+                schema: "Beer");
 
             migrationBuilder.DropTable(
                 name: "SpinGame",
-                schema: "Buzzify");
+                schema: "Beer");
 
             migrationBuilder.DropTable(
                 name: "User",
-                schema: "Buzzify");
+                schema: "Beer");
         }
     }
 }

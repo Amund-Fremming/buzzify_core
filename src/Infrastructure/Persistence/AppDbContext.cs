@@ -9,7 +9,7 @@ namespace Infrastructure.Persistence;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options), IAppDbContext
 {
-    private const string _schema = "Buzzify";
+    private const string _schema = "Beer";
 
     public DbSet<UserBase> User { get; set; }
     public DbSet<SpinGame> SpinGame { get; set; }

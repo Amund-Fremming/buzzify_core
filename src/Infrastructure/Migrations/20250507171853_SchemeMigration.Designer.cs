@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250415153256_SchemeMigration")]
+    [Migration("20250507171853_SchemeMigration")]
     partial class SchemeMigration
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("Buzzify")
+                .HasDefaultSchema("Beer")
                 .HasAnnotation("ProductVersion", "9.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -47,7 +47,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User", "Buzzify");
+                    b.ToTable("User", "Beer");
 
                     b.HasDiscriminator().HasValue("UserBase");
 
@@ -74,7 +74,7 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<int>("IterationCount")
+                    b.Property<int>("Iterations")
                         .HasColumnType("integer");
 
                     b.Property<string>("Name")
@@ -84,12 +84,12 @@ namespace Infrastructure.Migrations
                     b.Property<int>("State")
                         .HasColumnType("integer");
 
-                    b.Property<string>("UniversalId")
-                        .HasColumnType("text");
+                    b.Property<int>("UniversalId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.ToTable("AskGame", "Buzzify");
+                    b.ToTable("AskGame", "Beer");
                 });
 
             modelBuilder.Entity("Domain.Entities.Ask.Question", b =>
@@ -114,7 +114,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("AskGameId");
 
-                    b.ToTable("Question", "Buzzify");
+                    b.ToTable("Question", "Beer");
                 });
 
             modelBuilder.Entity("Domain.Entities.Spin.Challenge", b =>
@@ -125,14 +125,14 @@ namespace Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ParticipantsCount")
+                    b.Property<int>("GameId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Participants")
                         .HasColumnType("integer");
 
                     b.Property<bool>("ReadBeforeSpin")
                         .HasColumnType("boolean");
-
-                    b.Property<int>("RoundId")
-                        .HasColumnType("integer");
 
                     b.Property<int?>("SpinGameId")
                         .HasColumnType("integer");
@@ -145,7 +145,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("SpinGameId");
 
-                    b.ToTable("Challenge", "Buzzify");
+                    b.ToTable("Challenge", "Beer");
                 });
 
             modelBuilder.Entity("Domain.Entities.Spin.SpinGame", b =>
@@ -168,7 +168,7 @@ namespace Infrastructure.Migrations
                     b.Property<string>("HubGroupName")
                         .HasColumnType("text");
 
-                    b.Property<int>("IterationCount")
+                    b.Property<int>("Iterations")
                         .HasColumnType("integer");
 
                     b.Property<string>("Name")
@@ -178,14 +178,14 @@ namespace Infrastructure.Migrations
                     b.Property<int>("State")
                         .HasColumnType("integer");
 
-                    b.Property<string>("UniversalId")
-                        .HasColumnType("text");
+                    b.Property<int>("UniversalId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
                     b.HasIndex("HostId");
 
-                    b.ToTable("SpinGame", "Buzzify");
+                    b.ToTable("SpinGame", "Beer");
                 });
 
             modelBuilder.Entity("Domain.Entities.Spin.SpinPlayer", b =>
@@ -196,7 +196,13 @@ namespace Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("Active")
+                        .HasColumnType("boolean");
+
                     b.Property<int>("GameId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TimesChosen")
                         .HasColumnType("integer");
 
                     b.Property<int>("UserId")
@@ -209,7 +215,7 @@ namespace Infrastructure.Migrations
                     b.HasIndex("UserId", "GameId")
                         .IsUnique();
 
-                    b.ToTable("SpinPlayer", "Buzzify");
+                    b.ToTable("SpinPlayer", "Beer");
                 });
 
             modelBuilder.Entity("Domain.Entities.Shared.GuestUser", b =>

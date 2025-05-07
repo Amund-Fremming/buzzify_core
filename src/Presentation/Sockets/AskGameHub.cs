@@ -8,9 +8,16 @@ public class AskGameHub(IAskGameManager manager) : Hub
 {
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
-        if (Context.Items[HubConstants.GameId] is not int gameId)
+        var query = Context.GetHttpContext()?.Request.Query;
+        if (query is null)
         {
-            await Clients.Caller.SendAsync(HubChannels.Error, "Game id is not valid or present. Game not left properly.");
+            await Clients.Caller.SendAsync(HubChannels.Error, "HttpContext is not valid.");
+            return;
+        }
+
+        if (query[HubConstants.GameId].FirstOrDefault() is not string gameId)
+        {
+            await Clients.Caller.SendAsync(HubChannels.Error, "Game id is not valid or present.");
             return;
         }
 
@@ -23,13 +30,20 @@ public class AskGameHub(IAskGameManager manager) : Hub
 
     public override async Task OnConnectedAsync()
     {
-        if (Context.Items[HubConstants.GameId] is not int gameId)
+        var query = Context.GetHttpContext()?.Request.Query;
+        if (query is null)
+        {
+            await Clients.Caller.SendAsync(HubChannels.Error, "HttpContext is not valid.");
+            return;
+        }
+
+        if (query[HubConstants.GameId].FirstOrDefault() is not string gameId)
         {
             await Clients.Caller.SendAsync(HubChannels.Error, "Game id is not valid or present.");
             return;
         }
 
-        await Groups.AddToGroupAsync(gameId.ToString(), Context.ConnectionId);
+        await Groups.AddToGroupAsync(gameId, Context.ConnectionId);
         await Clients.Caller.SendAsync(HubChannels.Message, "Du er med, nå er det bare å legge inn spørsmål!");
     }
 

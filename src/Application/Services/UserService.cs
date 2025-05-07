@@ -5,7 +5,7 @@ using Domain.Shared.ResultPattern;
 
 namespace Application.Services;
 
-internal class UserService(IGenericRepository genericRepository) : IUserService
+public class UserService(IGenericRepository genericRepository) : IUserService
 {
     public async Task<Result<UserBase>> CreateGuestUser()
     {
