@@ -3,6 +3,7 @@ using Domain.Abstractions;
 using Domain.DTOs;
 using Domain.Entities.Ask;
 using Domain.Entities.Spin;
+using Domain.Shared;
 using Domain.Shared.ResultPattern;
 
 namespace Application.Services;
@@ -46,7 +47,7 @@ public class UniversalGameService(ISpinGameManager spinGameManager, IGenericRepo
             return joinResult.Error;
         }
 
-        return new AddedToGameResult(nameof(SpinGame), result.Data.UniversalId);
+        return new AddedToGameResult(GameType.SpinGame, result.Data.UniversalId);
     }
 
     private async Task<Result<AddedToGameResult>> AddPlayerToAskGame(int gameId)
@@ -62,7 +63,7 @@ public class UniversalGameService(ISpinGameManager spinGameManager, IGenericRepo
             return new Error("Det er ikke mulig å bli med i dette spillet.");
         }
 
-        return new AddedToGameResult(nameof(AskGame), askGameResult.Data.UniversalId);
+        return new AddedToGameResult(GameType.AskGame, askGameResult.Data.UniversalId);
     }
 
     private static (int, int) ExtractGameIndicator(int universalId)
