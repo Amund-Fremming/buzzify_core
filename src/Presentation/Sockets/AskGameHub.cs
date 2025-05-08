@@ -43,7 +43,7 @@ public class AskGameHub(IAskGameManager manager) : Hub
             return;
         }
 
-        await Groups.AddToGroupAsync(gameId, Context.ConnectionId);
+        await Groups.AddToGroupAsync(Context.ConnectionId, gameId);
         await Clients.Caller.SendAsync(HubChannels.Message, "Du er med, nå er det bare å legge inn spørsmål!");
     }
 
