@@ -24,24 +24,20 @@ services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new() { Title = "B_ API", Version = "v1" });
 });
 
-/*services.AddHttpClient(nameof(BeerPrice), client =>
-{
-    var baseUrlString = builder.Configuration["BeerPrices:Url"] ?? throw new InvalidOperationException("BeerPrices url does not exist.");
-    client.BaseAddress = new Uri(baseUrlString);
-});*/
-
 var app = builder.Build();
+
+app.UseCors(policy =>
+{
+    policy.AllowAnyOrigin()
+          .AllowAnyHeader()
+          .AllowAnyMethod();
+});
 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
     app.UseDeveloperExceptionPage();
-    app.UseCors(policy =>
-        policy.WithOrigins("http://localhost:8081", "https://localhost:8081")
-              .AllowAnyHeader()
-              .AllowAnyMethod()
-              .AllowCredentials());
 }
 
 app.MapHubs();

@@ -8,8 +8,8 @@ namespace Presentation.Endpoints;
 [Route("api/v1/[controller]")]
 public class UniversalGameController(IUniversalGameService service) : ControllerBase
 {
-    [HttpPost("{userId:number}/{universalGameId:number}")]
-    public async Task<IActionResult> AddPlayerToGame(int userId, int universalGameId)
+    [HttpPost]
+    public async Task<IActionResult> AddPlayerToGame([FromQuery] int userId, [FromQuery] int universalGameId)
         => (await service.AddPlayerToGame(userId, universalGameId))
             .Resolve(
                 suc => Ok(suc.Data),
