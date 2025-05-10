@@ -35,6 +35,7 @@ public sealed class AskGame : GameBase
 
     public Result<AskGame> StartGame()
     {
+        CurrentIteration = CurrentIteration + 1;
         State = AskGameState.Closed;
         _questions.Shuffle();
         return this;

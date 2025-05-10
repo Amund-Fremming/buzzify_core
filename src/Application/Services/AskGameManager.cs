@@ -53,7 +53,7 @@ public class AskGameManager(IAskGameRepository gameRepository, IGenericRepositor
 
     public async Task<Result<AskGame>> StartGame(int gameId)
     {
-        var result = await gameRepository.GetById(gameId);
+        var result = await gameRepository.GetGameWithQuestions(gameId);
         if (result.IsError || result.IsEmpty)
         {
             return result.Error;

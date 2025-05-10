@@ -26,11 +26,13 @@ services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
+// INFO: Only used for web
 app.UseCors(policy =>
 {
-    policy.AllowAnyOrigin()
+    policy.WithOrigins("http://localhost:8081", "https://localhost:8081")
           .AllowAnyHeader()
-          .AllowAnyMethod();
+          .AllowAnyMethod()
+          .AllowCredentials();
 });
 
 if (app.Environment.IsDevelopment())
