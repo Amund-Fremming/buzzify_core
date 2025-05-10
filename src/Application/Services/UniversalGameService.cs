@@ -10,7 +10,7 @@ namespace Application.Services;
 
 public class UniversalGameService(ISpinGameManager spinGameManager, IGenericRepository genericRepository) : IUniversalGameService
 {
-    public async Task<Result<AddedToGameResult>> AddPlayerToGame(int userId, int universalGameId)
+    public async Task<Result<AddedToGameResponse>> AddPlayerToGame(int userId, int universalGameId)
     {
         if (universalGameId < 10)
         {
@@ -25,15 +25,17 @@ public class UniversalGameService(ISpinGameManager spinGameManager, IGenericRepo
 
         var (indicator, gameId) = ExtractGameIndicator(universalGameId);
 
-        return indicator switch
+        var result = indicator switch
         {
             1 => await AddPlayerToAskGame(gameId),
             2 => await AddPlayerToSpinGame(gameId, userId),
             _ => new Error("Klarte ikke finne riktig spill.")
         };
+
+        return result;
     }
 
-    private async Task<Result<AddedToGameResult>> AddPlayerToSpinGame(int userId, int gameId)
+    private async Task<Result<AddedToGameResponse>> AddPlayerToSpinGame(int userId, int gameId)
     {
         var result = await genericRepository.GetById<SpinGame>(gameId);
         if (result.IsError)
@@ -47,10 +49,10 @@ public class UniversalGameService(ISpinGameManager spinGameManager, IGenericRepo
             return joinResult.Error;
         }
 
-        return new AddedToGameResult(GameType.SpinGame, result.Data.UniversalId);
+        return new AddedToGameResponse(GameType.SpinGame, gameId);
     }
 
-    private async Task<Result<AddedToGameResult>> AddPlayerToAskGame(int gameId)
+    private async Task<Result<AddedToGameResponse>> AddPlayerToAskGame(int gameId)
     {
         var askGameResult = await genericRepository.GetById<AskGame>(gameId);
         if (askGameResult.IsError)
@@ -63,7 +65,7 @@ public class UniversalGameService(ISpinGameManager spinGameManager, IGenericRepo
             return new Error("Det er ikke mulig å bli med i dette spillet.");
         }
 
-        return new AddedToGameResult(GameType.AskGame, askGameResult.Data.UniversalId);
+        return new AddedToGameResponse(GameType.AskGame, gameId);
     }
 
     private static (int, int) ExtractGameIndicator(int universalId)
@@ -71,7 +73,7 @@ public class UniversalGameService(ISpinGameManager spinGameManager, IGenericRepo
         Span<char> buffer = stackalloc char[10];
         var len = universalId.TryFormat(buffer, out int charsWritten) ? charsWritten : 0;
         var indicator = buffer[0] - '0';
-        var gameId = int.Parse(buffer[..1]);
+        var gameId = int.Parse(buffer[1..]);
         return (indicator, gameId);
     }
 }

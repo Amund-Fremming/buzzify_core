@@ -5,5 +5,5 @@ namespace Application.Contracts;
 
 public interface IUniversalGameService
 {
-    Task<Result<AddedToGameResult>> AddPlayerToGame(int userId, int universalGameId);
+    Task<Result<AddedToGameResponse>> AddPlayerToGame(int userId, int universalGameId);
 }
