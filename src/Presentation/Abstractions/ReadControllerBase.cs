@@ -16,7 +16,7 @@ public abstract class ReadControllerBase<T>(IGenericRepository repository) : Con
                 err => BadRequest(err.Message));
 
     [HttpGet("page")]
-    public async Task<ActionResult<IEnumerable<T>>> GetPage(PagedRequest page)
+    public async Task<ActionResult<IEnumerable<T>>> GetPage([FromBody] PagedRequest page)
         => (await repository.GetPage<T>(page))
             .Resolve(
                 suc => Ok(suc.Data),

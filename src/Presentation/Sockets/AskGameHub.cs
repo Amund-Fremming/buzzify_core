@@ -1,10 +1,11 @@
 ﻿using Application.Contracts;
+using Domain.Contracts;
 using Microsoft.AspNetCore.SignalR;
 using Presentation.Constants;
 
 namespace Presentation.Sockets;
 
-public class AskGameHub(IAskGameManager manager) : Hub
+public class AskGameHub(IAskGameManager manager, IAskGameRepository repository) : Hub
 {
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
@@ -23,9 +24,8 @@ public class AskGameHub(IAskGameManager manager) : Hub
 
         var remove = Groups.RemoveFromGroupAsync(Context.ConnectionId, gameId.ToString());
         var confirm = Clients.Caller.SendAsync(HubChannels.Message, "Du har forlatt spillet.");
-        var alert = Clients.GroupExcept(gameId.ToString(), Context.ConnectionId).SendAsync(HubChannels.PlayersLeft, "En bruker forlot spillet.");
 
-        await Task.WhenAll(remove, confirm, alert);
+        await Task.WhenAll(remove, confirm);
     }
 
     public override async Task OnConnectedAsync()
@@ -43,8 +43,19 @@ public class AskGameHub(IAskGameManager manager) : Hub
             return;
         }
 
-        await Groups.AddToGroupAsync(Context.ConnectionId, gameId);
-        await Clients.Caller.SendAsync(HubChannels.Message, "Du er med, nå er det bare å legge inn spørsmål!");
+        if (!int.TryParse(gameId, out var gameIdInt))
+        {
+            await Clients.Caller.SendAsync(HubChannels.Error, "Spill id må være ett tall.");
+            return;
+        }
+
+        var result = await repository.GetById(gameIdInt);
+
+        var add = Groups.AddToGroupAsync(Context.ConnectionId, gameId);
+        var message = Clients.Caller.SendAsync(HubChannels.Message, "Du er med, nå er det bare å legge inn spørsmål!");
+        var iterations = Clients.Caller.SendAsync(HubChannels.Iterations, result.Data.Iterations);
+
+        await Task.WhenAll(add, message, iterations);
     }
 
     public async Task AddQuestion(int gameId, string question)
@@ -68,6 +79,7 @@ public class AskGameHub(IAskGameManager manager) : Hub
             return;
         }
 
-        await Clients.Group(gameId.ToString()).SendAsync(HubChannels.State, result.Data.State);
+        await Clients.GroupExcept(gameId.ToString(), Context.ConnectionId).SendAsync(HubChannels.State, result.Data.State);
+        await Clients.Caller.SendAsync(HubChannels.Game, result.Data);
     }
 }
