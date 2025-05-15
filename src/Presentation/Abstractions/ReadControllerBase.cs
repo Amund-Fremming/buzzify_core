@@ -8,14 +8,7 @@ namespace Presentation.Abstractions;
 [ApiController]
 public abstract class ReadControllerBase<T>(IGenericRepository repository) : ControllerBase where T : class
 {
-    [HttpGet]
-    public async Task<ActionResult<T>> Get(int id)
-        => (await repository.GetById<T>(id))
-            .Resolve(
-                suc => Ok(suc.Data),
-                err => BadRequest(err.Message));
-
-    [HttpGet("page")]
+    [HttpPost("page")]
     public async Task<ActionResult<IEnumerable<T>>> GetPage([FromBody] PagedRequest page)
         => (await repository.GetPage<T>(page))
             .Resolve(

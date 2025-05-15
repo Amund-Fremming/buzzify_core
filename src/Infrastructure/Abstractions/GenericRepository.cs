@@ -37,8 +37,8 @@ public class GenericRepository(IAppDbContext context) : IGenericRepository
 
             var data = await context.Entity<T>()
                 .AsNoTracking()
-                .Take(pagedRequest.Take)
                 .Skip(pagedRequest.Skip)
+                .Take(pagedRequest.Take)
                 .ToListAsync();
 
             var page = PagedResponse<T>.Create(count, pagedRequest.PageNumber, data);

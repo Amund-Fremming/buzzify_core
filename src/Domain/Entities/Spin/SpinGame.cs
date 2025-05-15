@@ -8,9 +8,8 @@ public sealed class SpinGame : GameBase
 {
     public Category Category { get; private set; }
     public SpinGameState State { get; private set; }
-    public string? HubGroupName { get; private set; }
     public int HostId { get; private set; }
-    public UserBase Host { get; private set; } = default!;
+    public UserBase Host { get; private set; } = null!;
 
     private readonly IList<SpinPlayer> _players = [];
     private readonly IList<Challenge> _challenges = [];
@@ -35,18 +34,14 @@ public sealed class SpinGame : GameBase
     public Result<SpinPlayer> UpdateHost()
     {
         var prevHost = _players.FirstOrDefault(p => p.Id == HostId);
-        if (prevHost is null)
-        {
-            return new Error("The is provided is not in this game.");
-        }
+        prevHost?.SetActive(false);
 
-        prevHost.SetActive(false);
-        var nextHost = _players[0];
-        if (nextHost is null)
+        if (_players.Count == 0)
         {
             return new Error("The game does not have any players left.");
         }
 
+        var nextHost = _players[0];
         HostId = nextHost.Id;
         return nextHost;
     }
@@ -70,7 +65,6 @@ public sealed class SpinGame : GameBase
 
     public Result<IEnumerable<SpinPlayer>> GetChosenPlayers()
     {
-        // INFO: Mulig denne ikke oppdaterer selve spin players?
         throw new NotImplementedException();
     }
 
