@@ -1,4 +1,5 @@
 ﻿using Domain.Abstractions;
+using Domain.Extensions;
 using Domain.Shared.Enums;
 using Domain.Shared.ResultPattern;
 
@@ -63,9 +64,33 @@ public sealed class SpinGame : GameBase
         return Iterations;
     }
 
-    public Result<IEnumerable<SpinPlayer>> GetChosenPlayers()
+    public Result<IEnumerable<SpinPlayer>> GetChosenPlayers(int numberOfPlayers)
     {
-        throw new NotImplementedException();
+        if (_players.Count == 0)
+        {
+            return new Error("Spillet er tomt");
+        }
+        
+        var playersMap = _players.ToDictionary(p => p.Id, p => p);
+        var weightedList = _players.Select(p => (p, (1 - p.TimesChosen / CurrentIteration)))
+            .ToList()
+            .Shuffle();
+
+        var random = new Random();
+        var r = random.NextDouble() * 1;
+
+        var chosenPlayers = new List<SpinPlayer>();
+        while (numberOfPlayers > 0)
+        {
+            for (int i = 0; i < numberOfPlayers; i++)
+            {
+                var
+                if()
+            }
+        }
+        
+
+        return chosenPlayers;
     }
 
     public Result<Challenge> StartSpin()

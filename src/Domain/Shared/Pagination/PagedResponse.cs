@@ -8,16 +8,16 @@ public sealed record PagedResponse<T>
     public IList<T> Data { get; set; } = default!;
     public int PageCount => (int)Math.Ceiling((double)TotalItems / PageSize);
     public bool HasNextPage => CurrentPage < PageCount;
-    public bool HasPrevPage => PageSize > 0;
+    public bool HasPrevPage => CurrentPage > 1;
 
     private PagedResponse() { }
 
-    public static PagedResponse<T> Create(int totalItems, int currentPage, IList<T> data)
+    public static PagedResponse<T> Create(int totalItems, int currentPage,int pageSize, IList<T> data)
        => new()
        {
            TotalItems = totalItems,
            CurrentPage = currentPage,
-           PageSize = data.Count,
+           PageSize = pageSize,
            Data = data
        };
 

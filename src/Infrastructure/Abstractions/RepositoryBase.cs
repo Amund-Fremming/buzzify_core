@@ -41,7 +41,7 @@ public abstract class RepositoryBase<T>(IAppDbContext context) : IRepository<T> 
                 .Skip(pagedRequest.Skip)
                 .ToListAsync();
 
-            return PagedResponse<T>.Create(count, pagedRequest.PageNumber, data);
+            return PagedResponse<T>.Create(count, pagedRequest.PageNumber, pagedRequest.PageSize, data);
         }
         catch (Exception ex)
         {

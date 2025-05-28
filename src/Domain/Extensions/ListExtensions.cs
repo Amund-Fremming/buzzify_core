@@ -2,7 +2,7 @@
 
 public static class ListExtensions
 {
-    public static List<T> Shuffle<T>(this List<T> list) where T : class
+    public static List<T> Shuffle<T>(this List<T> list)
     {
         var random = new Random();
 

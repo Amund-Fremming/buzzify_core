@@ -41,7 +41,7 @@ public class GenericRepository(IAppDbContext context) : IGenericRepository
                 .Take(pagedRequest.Take)
                 .ToListAsync();
 
-            var page = PagedResponse<T>.Create(count, pagedRequest.PageNumber, data);
+            var page = PagedResponse<T>.Create(count, pagedRequest.PageNumber, pagedRequest.PageSize, data);
             return page;
         }
         catch (Exception ex)
