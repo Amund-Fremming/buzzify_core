@@ -9,7 +9,7 @@ public class Challenge
 
     public int GameId { get; private set; }
     public int Participants { get; private set; }
-    public string Text { get; private set; } = default!;
+    public string Text { get; private set; } = string.Empty;
     public bool ReadBeforeSpin { get; private set; }
 
     private Challenge()

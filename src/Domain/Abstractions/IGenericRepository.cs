@@ -7,7 +7,7 @@ public interface IGenericRepository
 {
     Task<Result<T>> GetById<T>(int id) where T : class;
 
-    Task<Result<PagedResponse<T>>> GetPage<T>(PagedRequest pagedRequest) where T : class;
+    Task<Result<PagedResponse<T>>> GetPage<T>(PagedRequest pagedRequest) where T : GameBase;
 
     Task<Result> Create<T>(T entity) where T : class;
 

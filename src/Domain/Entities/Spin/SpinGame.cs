@@ -64,36 +64,40 @@ public sealed class SpinGame : GameBase
         return Iterations;
     }
 
-    public Result<IEnumerable<SpinPlayer>> GetChosenPlayers(int numberOfPlayers)
+    private IEnumerable<SpinPlayer> SelectPlayers(int numberOfPlayers)
     {
         if (_players.Count == 0)
         {
-            return new Error("Spillet er tomt");
+            return [];
         }
-        
+
+        var rnd = new Random();
         var playersMap = _players.ToDictionary(p => p.Id, p => p);
-        var weightedList = _players.Select(p => (p, (1 - p.TimesChosen / CurrentIteration)))
-            .ToList()
-            .Shuffle();
-
-        var random = new Random();
-        var r = random.NextDouble() * 1;
-
-        var chosenPlayers = new List<SpinPlayer>();
-        while (numberOfPlayers > 0)
+        var r = rnd.NextDouble();
+        
+        var i = 0;
+        var selected = new List<SpinPlayer>();
+        while (selected.Count < numberOfPlayers)
         {
-            for (int i = 0; i < numberOfPlayers; i++)
+            if (i == _players.Count)
             {
-                var
-                if()
+                r = rnd.NextDouble();
+                i = 0;
+                continue;
+            }
+            
+            var player = _players[i];
+            var playerWeight = 1 - player.TimesChosen / Iterations;
+            if (playerWeight > r)
+            {
+                selected.Add(player);
             }
         }
         
-
-        return chosenPlayers;
+        return selected;
     }
 
-    public Result<Challenge> StartSpin()
+    public Result<Round> StartSpin()
     {
         if (CurrentIteration > Iterations || State == SpinGameState.Finished)
         {
@@ -104,12 +108,15 @@ public sealed class SpinGame : GameBase
         State = SpinGameState.Spinning;
         CurrentIteration++;
         var challenge = _challenges[CurrentIteration - 1];
-        if (!challenge.ReadBeforeSpin)
+
+        var text = challenge.Text;
+        if (challenge.ReadBeforeSpin)
         {
-            return challenge;
+            text = "";
         }
 
-        return challenge.EmptyText();
+        var round = new Round(text, challenge.Participants, SelectPlayers(challenge.Participants));
+        return round;
     }
 
     public Result<string> StartRound()
@@ -122,12 +129,9 @@ public sealed class SpinGame : GameBase
 
         State = SpinGameState.RoundStarted;
         var challenge = _challenges[CurrentIteration - 1];
-        if (!challenge.ReadBeforeSpin)
-        {
-            return "Neste challenge kommer da noen blir valgt, vær klare!";
-        }
-
-        return challenge.Text;
+        return !challenge.ReadBeforeSpin 
+            ? "Neste challenge kommer da noen blir valgt, vær klare!"
+            : string.Empty;
     }
 
     public bool GameFinished() => State == SpinGameState.Finished || CurrentIteration == Iterations - 1;
@@ -135,6 +139,7 @@ public sealed class SpinGame : GameBase
     public SpinGame AsCopy()
     {
         State = SpinGameState.ChallengesClosed;
+        IsOriginal = false;
         return this;
     }
 

@@ -4,12 +4,10 @@
 
 Dennis
 - BeerPrices lagres i DB (Se model i Domain)
-- BackgroundService for å hente ut data, lagre i db
+- BackgroundService for ï¿½ hente ut data, lagre i db
 - Logger service med enum tags for error level
 
-- Få inn warnings as errors og ubrukte variabler som feil
-
-## Frontend
+- Fï¿½ inn warnings as errors og ubrukte variabler som feil
 
 ## DB Optimalisering
 - Pooling

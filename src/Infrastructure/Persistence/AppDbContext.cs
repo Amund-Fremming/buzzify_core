@@ -48,6 +48,9 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         modelBuilder.Entity<SpinGame>()
             .ToTable(nameof(SpinGame));
 
+        modelBuilder.Entity<SpinGame>()
+            .HasIndex(g => new {  });
+        
         modelBuilder.Entity<SpinPlayer>()
             .HasOne(p => p.SpinGame)
             .WithMany(g => g.Players)

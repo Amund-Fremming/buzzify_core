@@ -12,11 +12,11 @@ public interface ISpinGameManager
 
     Task<Result<int>> CreateGame(int userId, string name, Category? category = null);
 
-    Task<Result<SpinGame>> CreateExistingGame(int userId, int gameId);
+    Task<Result<SpinGame>> CreateGameCopy(int userId, int gameId);
 
     Task<Result<int>> AddChallenge(int gameId, int participants, string text, bool readBeforeSpin = false);
 
     Task<Result<string>> StartRound(int userId, int gameId);
 
-    Task<Result<Challenge>> StartSpin(int userId, int gameId);
+    Task<Result<Round>> StartSpin(int userId, int gameId);
 }

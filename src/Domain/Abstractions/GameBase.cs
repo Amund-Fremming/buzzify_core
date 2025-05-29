@@ -8,7 +8,8 @@ public abstract class GameBase
     public int Id { get; set; }
 
     public int UniversalId { get; set; }
-    public string Name { get; set; } = default!;
+    public string Name { get; set; } = null!;
     public int Iterations { get; set; }
     public int CurrentIteration { get; set; }
+    public bool IsOriginal { get; set;}
 }

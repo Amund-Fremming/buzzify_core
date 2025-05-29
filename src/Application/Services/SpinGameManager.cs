@@ -72,7 +72,7 @@ public class SpinGameManager(ISpinGameRepository spinGameRepository, IGenericRep
         return createResult;
     }
 
-    public async Task<Result<SpinGame>> CreateExistingGame(int userId, int gameId)
+    public async Task<Result<SpinGame>> CreateGameCopy(int userId, int gameId)
     {
         var result = await spinGameRepository.GetById(gameId);
         if (result.IsError)
@@ -108,7 +108,7 @@ public class SpinGameManager(ISpinGameRepository spinGameRepository, IGenericRep
         return startResult.Data;
     }
 
-    public async Task<Result<Challenge>> StartSpin(int userId, int gameId)
+    public async Task<Result<Round>> StartSpin(int userId, int gameId)
     {
         var gameResult = await spinGameRepository.GetById(userId);
         if (gameResult.IsError)
@@ -120,6 +120,11 @@ public class SpinGameManager(ISpinGameRepository spinGameRepository, IGenericRep
         if (startResult.IsError)
         {
             return startResult.Error;
+        }
+
+        foreach (var selectedPlayer in startResult.Data.SelectedPlayers)
+        {
+            await genericRepository.Update(selectedPlayer);
         }
 
         var updateResult = await spinGameRepository.Update(gameResult.Data);

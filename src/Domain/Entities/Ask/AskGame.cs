@@ -44,6 +44,7 @@ public sealed class AskGame : GameBase
     {
         var game = new AskGame()
         {
+            IsOriginal = true,
             CreatorId = userId,
             Category = category,
             State = AskGameState.Initialized,
