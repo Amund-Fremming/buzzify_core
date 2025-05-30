@@ -15,7 +15,8 @@ public class SpinGameController(ISpinGameManager manager, IGenericRepository gen
     [HttpPost]
     public async Task<IActionResult> CreateGame([FromBody] CreateSpinGameRequest request) =>
         (await manager.CreateGame(request.UserId, request.Name, request.Category))
-        .Resolve(suc => Ok(suc.Data),
+        .Resolve(
+            suc => Ok(suc.Data),
             err => BadRequest(err.Message));
     
     [HttpPost("{userId:int}/{gameId:int}")]
@@ -25,7 +26,7 @@ public class SpinGameController(ISpinGameManager manager, IGenericRepository gen
                 suc => Ok(),
                 err => BadRequest(err.Message));
     
-    [HttpGet("page")]
+    [HttpPost("page")]
     public async Task<IActionResult> GetPage([FromBody] PagedRequest pagedRequest)
         => (await genericRepository.GetPage<SpinGame>(pagedRequest))
             .Resolve(

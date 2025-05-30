@@ -28,7 +28,7 @@ public class GenericRepository(IAppDbContext context) : IGenericRepository
         }
     }
 
-    public async Task<Result<PagedResponse<T>>> GetPage<T>(PagedRequest pagedRequest) where T : GameBase 
+    public async Task<Result<PagedResponse<T>>> GetPage<T>(PagedRequest pagedRequest) where T : class 
     {
         try
         {
@@ -37,7 +37,6 @@ public class GenericRepository(IAppDbContext context) : IGenericRepository
 
             var data = await context.Entity<T>()
                 .AsNoTracking()
-                .Where(g => g.IsOriginal)
                 .Skip(pagedRequest.Skip)
                 .Take(pagedRequest.Take)
                 .ToListAsync();
