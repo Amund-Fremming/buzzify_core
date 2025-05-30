@@ -22,6 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		changelog.md = changelog.md
 		shell.md = shell.md
 		tasklist.md = tasklist.md
+		docs.md = docs.md
 	EndProjectSection
 EndProject
 Global

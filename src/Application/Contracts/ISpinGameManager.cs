@@ -1,4 +1,5 @@
-﻿using Domain.Entities.Spin;
+﻿using Domain.DTOs;
+using Domain.Entities.Spin;
 using Domain.Shared.Enums;
 using Domain.Shared.ResultPattern;
 
@@ -10,7 +11,7 @@ public interface ISpinGameManager
 
     Task<Result<SpinPlayer>> InactivatePlayer(int userId, int gameId);
 
-    Task<Result<int>> CreateGame(int userId, string name, Category? category = null);
+    Task<Result<CreateGameResponse>> CreateGame(int userId, string name, Category? category = null);
 
     Task<Result<SpinGame>> CreateGameCopy(int userId, int gameId);
 

@@ -1,6 +1,7 @@
 ﻿using Application.Contracts;
 using Domain.Abstractions;
 using Domain.Contracts;
+using Domain.DTOs;
 using Domain.Entities.Spin;
 using Domain.Extentions;
 using Domain.Shared.Enums;
@@ -10,7 +11,7 @@ namespace Application.Services;
 
 public class SpinGameManager(ISpinGameRepository spinGameRepository, IGenericRepository genericRepository) : ISpinGameManager
 {
-    public async Task<Result<int>> CreateGame(int userId, string name, Category? category = null)
+    public async Task<Result<CreateGameResponse>> CreateGame(int userId, string name, Category? category = null)
     {
         var game = SpinGame.Create(name, userId, category);
         var result = await spinGameRepository.Create(game);
@@ -19,7 +20,9 @@ public class SpinGameManager(ISpinGameRepository spinGameRepository, IGenericRep
             return result.Error;
         }
 
-        return result.Data.Id;
+        var gameId = result.Data.Id;
+        var response = new CreateGameResponse(gameId, int.Parse("2" + gameId));
+        return response;
     }
 
     public async Task<Result<SpinPlayer>> InactivatePlayer(int userId, int gameId)
