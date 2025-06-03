@@ -15,9 +15,10 @@ public interface ISpinGameManager
 
     Task<Result<SpinGame>> CreateGameCopy(int userId, int gameId);
 
-    Task<Result<int>> AddChallenge(int gameId, int participants, string text, bool readBeforeSpin = false);
+    Task<Result<int>> AddChallenge(int gameId, int participants, string text, bool? readBeforeSpin = null);
+    Task<Result<SpinGameState>> CloseChallenges(int userId, int gameId);  
 
-    Task<Result<string>> StartRound(int userId, int gameId);
+    Task<Result<(string, SpinGameState)>> StartRound(int userId, int gameId);
 
     Task<Result<Round>> StartSpin(int userId, int gameId);
 }

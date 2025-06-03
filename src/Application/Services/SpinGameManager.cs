@@ -88,7 +88,7 @@ public class SpinGameManager(ISpinGameRepository spinGameRepository, IGenericRep
         return saveResult;
     }
 
-    public async Task<Result<string>> StartRound(int userId, int gameId)
+    public async Task<Result<(string, SpinGameState)>> StartRound(int userId, int gameId)
     {
         var gameResult = await spinGameRepository.GetById(gameId);
         if (gameResult.IsError)
@@ -96,24 +96,25 @@ public class SpinGameManager(ISpinGameRepository spinGameRepository, IGenericRep
             return gameResult.Error;
         }
 
-        var startResult = gameResult.Data.StartRound();
+        var game = gameResult.Data;
+        var startResult = game.StartRound();
         if (startResult.IsError)
         {
             return startResult.Error;
         }
 
-        var updateResult = await spinGameRepository.Update(gameResult.Data);
+        var updateResult = await spinGameRepository.Update(game);
         if (updateResult.IsError)
         {
             return updateResult.Error;
         }
 
-        return startResult.Data;
+        return (startResult.Data, game.State);
     }
 
     public async Task<Result<Round>> StartSpin(int userId, int gameId)
     {
-        var gameResult = await spinGameRepository.GetById(userId);
+        var gameResult = await spinGameRepository.GetGameWithPlayers(gameId);
         if (gameResult.IsError)
         {
             return gameResult.Error;
@@ -125,21 +126,17 @@ public class SpinGameManager(ISpinGameRepository spinGameRepository, IGenericRep
             return startResult.Error;
         }
 
-        foreach (var selectedPlayer in startResult.Data.SelectedPlayers)
-        {
-            await genericRepository.Update(selectedPlayer);
-        }
-
+        // INFO: Update calls save changes on context and updates the players aswell.
         var updateResult = await spinGameRepository.Update(gameResult.Data);
         if (updateResult.IsError)
         {
             return updateResult.Error;
         }
-
+        
         return startResult.Data;
     }
 
-    public async Task<Result<int>> AddChallenge(int gameId, int participants, string text, bool readBeforeSpin = false)
+    public async Task<Result<int>> AddChallenge(int gameId, int participants, string text, bool? readBeforeSpin = null)
     {
         var gameResult = await spinGameRepository.GetById(gameId);
         if (gameResult.IsError)
@@ -147,7 +144,7 @@ public class SpinGameManager(ISpinGameRepository spinGameRepository, IGenericRep
             return gameResult.Error;
         }
 
-        var challenge = Challenge.Create(gameId, participants, text, readBeforeSpin);
+        var challenge = Challenge.Create(gameId, participants, text, readBeforeSpin ?? false);
         var addResult = gameResult.Data.AddChallenge(challenge);
         if (addResult.IsError)
         {
@@ -167,5 +164,29 @@ public class SpinGameManager(ISpinGameRepository spinGameRepository, IGenericRep
         }
 
         return addResult;
+    }
+
+    public async Task<Result<SpinGameState>> CloseChallenges(int userId, int gameId)
+    {
+        var result = await spinGameRepository.GetGameWithPlayers(gameId);
+        if (result.IsError)
+        {
+            return result.Error;
+        }
+
+        var game = result.Data;
+        if (game.HostId != userId)
+        {
+            return new Error("Du har ikke tilgang til denne handlingen.");
+        }
+
+        game.CloseChallenges();
+        var saveResult = await genericRepository.Update(game);
+        if (saveResult.IsError)
+        {
+            return saveResult.Error;    
+        }
+
+        return game.State;
     }
 }

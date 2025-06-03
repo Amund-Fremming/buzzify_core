@@ -19,7 +19,7 @@ public class SpinGameController(ISpinGameManager manager, IGenericRepository gen
             suc => Ok(suc.Data),
             err => BadRequest(err.Message));
     
-    [HttpPost("{userId:int}/{gameId:int}")]
+    [HttpPost("user/{userId:int}/game/{gameId:int}")]
     public async Task<IActionResult> InactivatePlayer(int userId, int gameId)
         => (await manager.InactivatePlayer(userId, gameId))
             .Resolve(

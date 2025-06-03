@@ -12,13 +12,13 @@ public class AskGameHub(IAskGameManager manager, IAskGameRepository repository) 
         var query = Context.GetHttpContext()?.Request.Query;
         if (query is null)
         {
-            await Clients.Caller.SendAsync(HubChannels.Error, "HttpContext is not valid.");
+            await Clients.Caller.SendAsync(HubChannels.Error, "HttpContext er ikke gyldig.");
             return;
         }
 
         if (query[HubConstants.GameId].FirstOrDefault() is not string gameId)
         {
-            await Clients.Caller.SendAsync(HubChannels.Error, "Game id is not valid or present.");
+            await Clients.Caller.SendAsync(HubChannels.Error, "Game id er ikke gyldig.");
             return;
         }
 
@@ -33,13 +33,13 @@ public class AskGameHub(IAskGameManager manager, IAskGameRepository repository) 
         var query = Context.GetHttpContext()?.Request.Query;
         if (query is null)
         {
-            await Clients.Caller.SendAsync(HubChannels.Error, "HttpContext is not valid.");
+            await Clients.Caller.SendAsync(HubChannels.Error, "HttpContext er ikke gyldig.");
             return;
         }
 
         if (query[HubConstants.GameId].FirstOrDefault() is not string gameId)
         {
-            await Clients.Caller.SendAsync(HubChannels.Error, "Game id is not valid or present.");
+            await Clients.Caller.SendAsync(HubChannels.Error, "Game id er ikke gyldig.");
             return;
         }
 
@@ -50,9 +50,14 @@ public class AskGameHub(IAskGameManager manager, IAskGameRepository repository) 
         }
 
         var result = await repository.GetById(gameIdInt);
+        if (result.IsError)
+        {
+            await Clients.Caller.SendAsync(HubChannels.Error, result.Error);
+            return;
+        }
 
         var add = Groups.AddToGroupAsync(Context.ConnectionId, gameId);
-        var message = Clients.Caller.SendAsync(HubChannels.Message, "Du er med, nå er det bare å legge inn spørsmål!");
+        var message = Clients.Caller.SendAsync(HubChannels.Message, "Du er med, start å legge inn spørsmål!");
         var iterations = Clients.Caller.SendAsync(HubChannels.Iterations, result.Data.Iterations);
 
         await Task.WhenAll(add, message, iterations);
@@ -75,7 +80,7 @@ public class AskGameHub(IAskGameManager manager, IAskGameRepository repository) 
         var result = await manager.StartGame(gameId);
         if (result.IsError)
         {
-            await Clients.Caller.SendAsync(HubChannels.Error, "En feil skjedde ved oppstart av spillet.");
+            await Clients.Caller.SendAsync(HubChannels.Error, result.Error);
             return;
         }
 

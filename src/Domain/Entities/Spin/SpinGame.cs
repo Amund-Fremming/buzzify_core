@@ -20,7 +20,10 @@ public sealed class SpinGame : GameBase
 
     private SpinGame()
     { }
+    
+    public void CloseChallenges() => State = SpinGameState.ChallengesClosed;
 
+    // TODO - remove
     public Result AddPlayer(SpinPlayer player)
     {
         if (_players.Contains(player))
@@ -115,7 +118,7 @@ public sealed class SpinGame : GameBase
             text = "";
         }
 
-        var round = new Round(text, challenge.Participants, SelectPlayers(challenge.Participants));
+        var round = new Round(text, challenge.Participants, SelectPlayers(challenge.Participants), _players.ToHashSet());
         return round;
     }
 
