@@ -31,7 +31,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
         modelBuilder.Entity<UserBase>()
             .HasKey(u => u.Id);
-
+        
         modelBuilder.Entity<SpinPlayer>()
             .HasIndex(p => new { p.UserId, p.GameId })
             .IsUnique();
@@ -45,6 +45,14 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         modelBuilder.Entity<AskGame>()
             .HasIndex(g => new { g.Id, g.IsOriginal });
 
+        modelBuilder.Entity<AskGame>()
+            .Property(g => g.Name)
+            .HasMaxLength(40);
+
+        modelBuilder.Entity<AskGame>()
+            .Property(g => g.Description)
+            .HasMaxLength(100);
+
         modelBuilder.Entity<SpinGame>()
             .HasKey(g => g.Id);
 
@@ -54,6 +62,10 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         modelBuilder.Entity<SpinGame>()
             .HasIndex(g => new { g.Id, g.IsOriginal });
         
+        modelBuilder.Entity<SpinGame>()
+            .Property(g => g.Name)
+            .HasMaxLength(40);  
+        
         modelBuilder.Entity<SpinPlayer>()
             .HasOne(p => p.SpinGame)
             .WithMany(g => g.Players)
@@ -62,8 +74,16 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         modelBuilder.Entity<Question>()
             .HasKey(q => q.Id);
 
+        modelBuilder.Entity<Question>()
+            .Property(q => q.Text)
+            .HasMaxLength(100);
+
         modelBuilder.Entity<Challenge>()
             .HasKey(c => c.Id);
+        
+        modelBuilder.Entity<Challenge>()
+            .Property(c => c.Text)
+            .HasMaxLength(100); 
     }
 
     public void ApplyChanges<T>(T entity) where T : class => base.Update(entity);

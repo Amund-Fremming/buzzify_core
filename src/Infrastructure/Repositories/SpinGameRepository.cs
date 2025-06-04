@@ -38,6 +38,7 @@ public class SpinGameRepository(IAppDbContext context) : RepositoryBase<SpinGame
             var game = await _context.SpinGame
                 .Include(x => x.Players)
                 .Include(x => x.Challenges)
+                .AsSplitQuery()
                 .FirstOrDefaultAsync();
 
             if (game is null)

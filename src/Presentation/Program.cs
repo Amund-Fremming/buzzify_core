@@ -1,5 +1,6 @@
 using Application;
 using Infrastructure;
+using Microsoft.OpenApi.Models;
 using Presentation.Sockets;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,7 +22,7 @@ services.AddResponseCompression(o =>
 
 services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new() { Title = "B_ API", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "B_ API", Version = "v1" });
 });
 
 var app = builder.Build();

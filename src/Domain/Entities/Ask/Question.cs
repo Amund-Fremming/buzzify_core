@@ -7,10 +7,10 @@ public class Question
     [Key]
     public int Id { get; }
 
-    public int AskGameId { get; set; }
-    public string Text { get; set; } = default!;
-
-    public bool Active { get; set; }
+    public int AskGameId { get; init; }
+    
+    [MaxLength(100)]
+    public string Text { get; init; } = default!;
 
     private Question()
     { }
@@ -20,6 +20,5 @@ public class Question
         {
             Text = text,
             AskGameId = gameId,
-            Active = true
         };
 }

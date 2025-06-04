@@ -101,9 +101,48 @@ public class SpinGameHub(ISpinGameManager manager, ISpinGameRepository repositor
         await Clients.GroupExcept(gameId.ToString(), Context.ConnectionId).SendAsync(HubChannels.State, state);
     }
     
-    public async Task StartSpin()
+    public async Task StartSpin(int userId, int gameId)
     {
-        await Task.Run(() => Console.WriteLine("Hey"));
-        // TODO
+        var result = await manager.StartSpin(userId, gameId);
+        if (result.IsError)
+        {
+            await Clients.Caller.SendAsync(HubChannels.Error, result.Error);    
+            return;
+        }
+
+        var round = result.Data;
+        for (var i = 0; i < 10; i++)
+        {
+            var indexes = GetRandomNumbers(round.RoundParticipants, round.AllPlayers.Count);
+            var spinTasks = new List<Task>();
+            foreach (var index in indexes)
+            {
+                var playerId = round.AllPlayers[index].Id;
+                spinTasks.Add(Clients.Group(gameId.ToString()).SendAsync(HubChannels.Game, playerId));
+            }
+            
+            await Task.WhenAll(spinTasks);  
+            Thread.Sleep(300);
+        }
+        
+        var tasks = round.SelectedPlayers.Select(player => Clients.Group(gameId.ToString()).SendAsync(HubChannels.Game, player.Id)).ToList();
+        tasks.Add(Clients.Group(gameId.ToString()).SendAsync(HubChannels.Message, round.ChallengeText));
+        
+        await Task.WhenAll(tasks);  
+    }
+
+    private static List<int> GetRandomNumbers(int participants, int numPlayers)
+    {
+        var rnd = new Random();
+        var i = rnd.Next(0, numPlayers - 1);
+        
+        var ids = new HashSet<int>();
+        while (ids.Count != participants)
+        {
+            var j = rnd.Next(0, numPlayers - 1);
+            ids.Add(j);
+        }
+
+        return ids.ToList();
     }
 }

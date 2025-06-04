@@ -67,7 +67,7 @@ public sealed class SpinGame : GameBase
         return Iterations;
     }
 
-    private IEnumerable<SpinPlayer> SelectPlayers(int numberOfPlayers)
+    private List<SpinPlayer> SelectPlayers(int numberOfPlayers)
     {
         if (_players.Count == 0)
         {

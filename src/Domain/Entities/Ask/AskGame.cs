@@ -1,4 +1,5 @@
-﻿using Domain.Abstractions;
+﻿using System.ComponentModel.DataAnnotations;
+using Domain.Abstractions;
 using Domain.Extensions;
 using Domain.Shared.Enums;
 using Domain.Shared.ResultPattern;
@@ -13,7 +14,9 @@ public sealed class AskGame : GameBase
     public int CreatorId { get; set; }
     public Category Category { get; private set; }
     public AskGameState State { get; private set; }
-    public string? Description { get; set; }
+    
+    [MaxLength(100)]
+    public string? Description { get; set; } 
 
     private readonly List<Question> _questions = [];
     public IReadOnlyList<Question> Questions => _questions.AsReadOnly();

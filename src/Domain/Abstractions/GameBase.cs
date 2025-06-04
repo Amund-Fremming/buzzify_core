@@ -8,6 +8,8 @@ public abstract class GameBase
     public int Id { get; set; }
 
     public int UniversalId { get; set; }
+    
+    [MaxLength(40)]
     public string Name { get; set; } = null!;
     public int Iterations { get; set; }
     public int CurrentIteration { get; set; }
