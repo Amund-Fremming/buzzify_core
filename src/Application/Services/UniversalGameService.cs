@@ -28,7 +28,7 @@ public class UniversalGameService(ISpinGameManager spinGameManager, IGenericRepo
         var result = indicator switch
         {
             1 => await AddPlayerToAskGame(gameId),
-            2 => await AddPlayerToSpinGame(gameId, userId),
+            2 => await AddPlayerToSpinGame(userId, gameId),
             _ => new Error("Klarte ikke finne riktig spill.")
         };
 
