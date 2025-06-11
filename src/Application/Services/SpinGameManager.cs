@@ -3,7 +3,7 @@ using Domain.Abstractions;
 using Domain.Contracts;
 using Domain.DTOs;
 using Domain.Entities.Spin;
-using Domain.Extentions;
+using Domain.Extensions;
 using Domain.Shared.Enums;
 using Domain.Shared.ResultPattern;
 
@@ -11,7 +11,7 @@ namespace Application.Services;
 
 public class SpinGameManager(ISpinGameRepository spinGameRepository, IGenericRepository genericRepository) : ISpinGameManager
 {
-    public async Task<Result<CreateGameResponse>> CreateGame(int userId, string name, Category? category = null)
+    public async Task<Result<SpinGame>> CreateGame(int userId, string name, Category? category = null)
     {
         var game = SpinGame.Create(name, userId, category);
         var result = await spinGameRepository.Create(game);
@@ -20,9 +20,10 @@ public class SpinGameManager(ISpinGameRepository spinGameRepository, IGenericRep
             return result.Error;
         }
 
-        var gameId = result.Data.Id;
-        var response = new CreateGameResponse(gameId, int.Parse("2" + gameId));
-        return response;
+        game = result.Data;
+        game.SetUniversalId();
+        
+        return game;
     }
 
     public async Task<Result<SpinPlayer>> InactivatePlayer(int userId, int gameId)
@@ -77,7 +78,7 @@ public class SpinGameManager(ISpinGameRepository spinGameRepository, IGenericRep
 
     public async Task<Result<SpinGame>> CreateGameCopy(int userId, int gameId)
     {
-        var result = await spinGameRepository.GetById(gameId);
+        var result = await spinGameRepository.GetGameWithChallenges(gameId);
         if (result.IsError)
         {
             return result.Error;
@@ -85,7 +86,13 @@ public class SpinGameManager(ISpinGameRepository spinGameRepository, IGenericRep
 
         var game = result.Data.PartialCopy(userId);
         var saveResult = await spinGameRepository.Create(game);
-        return saveResult;
+        if (saveResult.IsError)
+        {
+            return result.Error;
+        }
+        
+        game.SetUniversalId();
+        return game;
     }
 
     public async Task<Result<(string, SpinGameState)>> StartRound(int userId, int gameId)

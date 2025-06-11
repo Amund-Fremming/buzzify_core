@@ -31,6 +31,27 @@ public class SpinGameRepository(IAppDbContext context) : RepositoryBase<SpinGame
         }
     }
 
+    public async Task<Result<SpinGame>> GetGameWithChallenges(int id)
+    {
+        try
+        {
+            var result = await _context.SpinGame
+                .Include(g => g.Challenges)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (result is null)
+            {
+                return new Error($"Game with id {id} does not exist.");
+            }
+            
+            return result;  
+        }
+        catch (Exception ex)
+        {
+            return new Error(nameof(GetGameWithChallenges), ex);
+        }
+    }
+
     public async Task<Result<SpinGame>> GetGameWithPlayersAndChallenges(int id)
     {
         try

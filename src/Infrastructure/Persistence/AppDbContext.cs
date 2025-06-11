@@ -43,7 +43,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             .ToTable(nameof(AskGame));
 
         modelBuilder.Entity<AskGame>()
-            .HasIndex(g => new { g.Id, g.IsOriginal });
+            .HasIndex(g => new { g.Id, IsOriginal = g.IsCopy });
 
         modelBuilder.Entity<AskGame>()
             .Property(g => g.Name)
@@ -60,7 +60,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             .ToTable(nameof(SpinGame));
 
         modelBuilder.Entity<SpinGame>()
-            .HasIndex(g => new { g.Id, g.IsOriginal });
+            .HasIndex(g => new { g.Id, IsOriginal = g.IsCopy });
         
         modelBuilder.Entity<SpinGame>()
             .Property(g => g.Name)

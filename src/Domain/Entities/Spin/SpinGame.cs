@@ -13,7 +13,7 @@ public sealed class SpinGame : GameBase
     public UserBase Host { get; private set; } = null!;
 
     private readonly IList<SpinPlayer> _players = [];
-    private readonly IList<Challenge> _challenges = [];
+    private IList<Challenge> _challenges = [];
 
     public IReadOnlyList<SpinPlayer> Players => _players.AsReadOnly();
     public IReadOnlyList<Challenge> Challenges => _challenges.AsReadOnly();
@@ -137,28 +137,26 @@ public sealed class SpinGame : GameBase
             : string.Empty;
     }
 
-    public bool GameFinished() => State == SpinGameState.Finished || CurrentIteration == Iterations - 1;
-
+    public IList<Challenge> GetChallenges() => _challenges;
+    
     public SpinGame AsCopy()
     {
         State = SpinGameState.ChallengesClosed;
-        IsOriginal = false;
+        IsCopy = true;
         return this;
     }
 
-    public static SpinGame Create(string name, int hostId, Category? category = Category.Random)
-    {
-        var game = new SpinGame()
+    public static SpinGame Create(string name, int hostId, Category? category = Category.Random, IList<Challenge>? challenges = null)
+        => new ()
         {
             Category = category ?? Category.Random,
             State = SpinGameState.Initialized,
             Name = name,
-            Iterations = 0,
+            Iterations = challenges?.Count ?? 0,
             CurrentIteration = 0,
             HostId = hostId,
+            _challenges = challenges ?? [],
         };
 
-        game.UniversalId = int.Parse("2" + game.Id);
-        return game;
-    }
+    public override void SetUniversalId() => UniversalId = int.Parse("2" + Id);
 }

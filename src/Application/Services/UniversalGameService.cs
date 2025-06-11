@@ -49,23 +49,25 @@ public class UniversalGameService(ISpinGameManager spinGameManager, IGenericRepo
             return joinResult.Error;
         }
 
-        return new AddedToGameResponse(GameType.SpinGame, gameId);
+        result.Data.SetUniversalId();
+        return new AddedToGameResponse(GameType.SpinGame, result.Data);
     }
 
     private async Task<Result<AddedToGameResponse>> AddPlayerToAskGame(int gameId)
     {
-        var askGameResult = await genericRepository.GetById<AskGame>(gameId);
-        if (askGameResult.IsError)
+        var result = await genericRepository.GetById<AskGame>(gameId);
+        if (result.IsError)
         {
-            return askGameResult.Error;
+            return result.Error;
         }
 
-        if (askGameResult.Data.State == AskGameState.Closed)
+        if (result.Data.State == AskGameState.Closed)
         {
             return new Error("Det er ikke mulig å bli med i dette spillet.");
         }
-
-        return new AddedToGameResponse(GameType.AskGame, gameId);
+        
+        result.Data.SetUniversalId(); 
+        return new AddedToGameResponse(GameType.AskGame, result.Data);
     }
 
     private static (int, int) ExtractGameIndicator(int universalId)

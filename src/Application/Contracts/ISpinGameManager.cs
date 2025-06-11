@@ -11,7 +11,7 @@ public interface ISpinGameManager
 
     Task<Result<SpinPlayer>> InactivatePlayer(int userId, int gameId);
 
-    Task<Result<CreateGameResponse>> CreateGame(int userId, string name, Category? category = null);
+    Task<Result<SpinGame>> CreateGame(int userId, string name, Category? category = null);
 
     Task<Result<SpinGame>> CreateGameCopy(int userId, int gameId);
 

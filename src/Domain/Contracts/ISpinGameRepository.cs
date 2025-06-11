@@ -6,6 +6,7 @@ namespace Domain.Contracts;
 
 public interface ISpinGameRepository : IRepository<SpinGame>
 {
+    Task<Result<SpinGame>> GetGameWithChallenges(int id);
     Task<Result<SpinGame>> GetGameWithPlayersAndChallenges(int id);
 
     Task<Result<SpinGame>> GetGameWithPlayers(int id);

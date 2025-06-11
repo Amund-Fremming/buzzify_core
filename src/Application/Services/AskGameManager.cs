@@ -10,7 +10,7 @@ namespace Application.Services;
 
 public class AskGameManager(IAskGameRepository gameRepository, IGenericRepository genericRepository) : IAskGameManager
 {
-    public async Task<Result<CreateGameResponse>> CreateGame(int userId, string name, string description = "", Category category = Category.Random)
+    public async Task<Result<AskGame>> CreateGame(int userId, string name, string description = "", Category category = Category.Random)
     {
         var game = AskGame.Create(userId, name, description, category);
         var result = await gameRepository.Create(game);
@@ -19,10 +19,10 @@ public class AskGameManager(IAskGameRepository gameRepository, IGenericRepositor
             return result.Error;
         }
 
-        var gameId = result.Data.Id;
-        var response = new CreateGameResponse(gameId, int.Parse("1" + gameId));
+        game = result.Data;
+        game.SetUniversalId();
 
-        return response;
+        return game;
     }
 
     public async Task<Result<int>> AddQuestion(int gameId, string text)

@@ -9,5 +9,3 @@ dotnet ef migrations add SchemeMigration --project src/Infrastructure/Infrastruc
 ```sh
 dotnet ef database update --project src/Infrastructure/Infrastructure.csproj --startup-project src/Presentation/Presentation.csproj
 ```
-
-

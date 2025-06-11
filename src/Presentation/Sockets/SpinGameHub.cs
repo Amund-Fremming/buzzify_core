@@ -68,7 +68,7 @@ public class SpinGameHub(ISpinGameManager manager, ISpinGameRepository repositor
         var result = await manager.AddChallenge(gameId, participants, text, readBeforeSpin);
         if (result.IsError)
         {
-            await Clients.Caller.SendAsync(HubChannels.Error, result.Error);
+            await Clients.Caller.SendAsync(HubChannels.Error, result.Message);
             return;
         }
 
@@ -80,7 +80,7 @@ public class SpinGameHub(ISpinGameManager manager, ISpinGameRepository repositor
         var result = await manager.CloseChallenges(userId, gameId);
         if (result.IsError)
         {
-            await Clients.Caller.SendAsync(HubChannels.Error, result.Error.Message);
+            await Clients.Caller.SendAsync(HubChannels.Error, result.Message);
             return;
         }
 
@@ -92,7 +92,7 @@ public class SpinGameHub(ISpinGameManager manager, ISpinGameRepository repositor
         var result = await manager.StartRound(userId, gameId);
         if (result.IsError)
         {
-            await Clients.Caller.SendAsync(HubChannels.Error, result.Error);    
+            await Clients.Caller.SendAsync(HubChannels.Error, result.Message);    
             return;
         }
 
@@ -106,7 +106,7 @@ public class SpinGameHub(ISpinGameManager manager, ISpinGameRepository repositor
         var result = await manager.StartSpin(userId, gameId);
         if (result.IsError)
         {
-            await Clients.Caller.SendAsync(HubChannels.Error, result.Error);    
+            await Clients.Caller.SendAsync(HubChannels.Error, result.Message);    
             return;
         }
 

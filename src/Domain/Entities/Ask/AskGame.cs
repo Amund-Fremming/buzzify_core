@@ -47,7 +47,7 @@ public sealed class AskGame : GameBase
     {
         var game = new AskGame()
         {
-            IsOriginal = true,
+            IsCopy = false,
             CreatorId = userId,
             Category = category,
             State = AskGameState.Initialized,
@@ -60,4 +60,7 @@ public sealed class AskGame : GameBase
         game.UniversalId = int.Parse("1" + game.Id);
         return game;
     }
+
+    public override void SetUniversalId() => UniversalId = int.Parse("1" + Id);
+    
 }
