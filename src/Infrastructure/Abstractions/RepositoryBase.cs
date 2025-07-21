@@ -28,7 +28,7 @@ public abstract class RepositoryBase<T>(IAppDbContext context) : IRepository<T> 
         }
     }
 
-    public async Task<Result<PagedResponse<T>>> GetPage(PagedRequest pagedRequest)
+    public async Task<Result<PagedResponse>> GetPage(PagedRequest pagedRequest)
     {
         try
         {
@@ -41,7 +41,7 @@ public abstract class RepositoryBase<T>(IAppDbContext context) : IRepository<T> 
                 .Skip(pagedRequest.Skip)
                 .ToListAsync();
 
-            return PagedResponse<T>.Create(count, pagedRequest.PageNumber, pagedRequest.PageSize, data);
+            return PagedResponse.Create(count, pagedRequest.PageNumber, pagedRequest.PageSize, data);
         }
         catch (Exception ex)
         {

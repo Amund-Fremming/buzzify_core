@@ -1,8 +1,5 @@
 ﻿using Application.Contracts;
-using Domain.Abstractions;
 using Domain.DTOs;
-using Domain.Entities.Spin;
-using Domain.Shared.Pagination;
 using Domain.Shared.ResultPattern;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,7 +7,7 @@ namespace Presentation.Endpoints;
 
 [ApiController]
 [Route("api/v1/[controller]")]
-public class SpinGameController(ISpinGameManager manager, IGenericRepository genericRepository) : ControllerBase
+public class SpinGameController(ISpinGameManager manager) : ControllerBase
 {
     [HttpGet("user/{userId:int}/game/{gameId:int}")]
     public async Task<IActionResult> Get(int userId, int gameId)
@@ -31,11 +28,4 @@ public class SpinGameController(ISpinGameManager manager, IGenericRepository gen
             .Resolve(
                 suc => Ok(),
                 err => BadRequest(err.Message));
-    
-    [HttpPost("page")]
-    public async Task<IActionResult> GetPage([FromBody] PagedRequest pagedRequest)
-        => (await genericRepository.GetPage<SpinGame>(pagedRequest))
-            .Resolve(
-                suc => Ok(suc.Data),
-                err => BadRequest(err.Message));    
 }

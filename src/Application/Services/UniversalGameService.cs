@@ -69,7 +69,7 @@ public class UniversalGameService(ISpinGameManager spinGameManager, IGenericRepo
         result.Data.SetUniversalId(); 
         return new AddedToGameResponse(GameType.AskGame, result.Data);
     }
-
+    
     private static (int, int) ExtractGameIndicator(int universalId)
     {
         Span<char> buffer = stackalloc char[10];
@@ -78,4 +78,5 @@ public class UniversalGameService(ISpinGameManager spinGameManager, IGenericRepo
         var gameId = int.Parse(buffer[1..]);
         return (indicator, gameId);
     }
+    
 }

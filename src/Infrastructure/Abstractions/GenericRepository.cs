@@ -28,7 +28,7 @@ public class GenericRepository(IAppDbContext context) : IGenericRepository
         }
     }
 
-    public async Task<Result<PagedResponse<T>>> GetPage<T>(PagedRequest pagedRequest) where T : class 
+    public async Task<Result<PagedResponse>> GetPage<T>(PagedRequest pagedRequest) where T : class 
     {
         try
         {
@@ -41,7 +41,7 @@ public class GenericRepository(IAppDbContext context) : IGenericRepository
                 .Take(pagedRequest.Take)
                 .ToListAsync();
 
-            var page = PagedResponse<T>.Create(count, pagedRequest.PageNumber, pagedRequest.PageSize, data);
+            var page = PagedResponse.Create(count, pagedRequest.PageNumber, pagedRequest.PageSize, data);
             return page;
         }
         catch (Exception ex)

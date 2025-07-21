@@ -11,7 +11,7 @@ namespace Presentation.Endpoints;
 
 [ApiController]
 [Route("api/v1/[controller]")]
-public class AskGameController(IAskGameManager manager, IAskGameRepository repository, IGenericRepository genericRepository) : ControllerBase
+public class AskGameController(IAskGameManager manager, IAskGameRepository repository) : ControllerBase
 {
     [HttpPost]
     public async Task<IActionResult> CreateGame([FromBody] CreateAskGameRequest request)
@@ -23,14 +23,6 @@ public class AskGameController(IAskGameManager manager, IAskGameRepository repos
     [HttpGet("{id:int}")]
     public async Task<IActionResult> Get(int id)
         => (await repository.GetGameWithQuestions(id))
-            .Resolve(
-                suc => Ok(suc.Data),
-                err => BadRequest(err.Message));
-    
-    
-    [HttpPost("page")]
-    public async Task<IActionResult> GetPage([FromBody] PagedRequest page)
-        => (await genericRepository.GetPage<AskGame>(page))
             .Resolve(
                 suc => Ok(suc.Data),
                 err => BadRequest(err.Message));
