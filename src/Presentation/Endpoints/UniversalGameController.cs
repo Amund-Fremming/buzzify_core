@@ -22,7 +22,7 @@ public class UniversalGameController(IUniversalGameService service, IGenericRepo
                 suc => Ok(suc.Data),
                 err => BadRequest(err.Message));
 
-    [HttpGet("page")]
+    [HttpPost("page")]
     public async Task<ActionResult<GameBase>> GetPage([FromQuery] GameType gameType, [FromBody] PagedRequest pagedRequest)
     {
         var result = gameType switch
